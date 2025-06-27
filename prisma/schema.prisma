@@ -1,0 +1,284 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+  MERCHANT
+}
+
+model MerchantReview {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  rating    Float?
+  comment   String?
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    String?  @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model User {
+  id                       String           @id @default(auto()) @map("_id") @db.ObjectId
+  name                     String
+  email                    String           @unique
+  shopName                 String?
+  address                  String?
+  idDeactivationDate       DateTime         @default(now())
+  merchantDeactivationDate DateTime         @default(now())
+  businessCategory         String?
+  division                 String?
+  district                 String?
+  deliveryPartner          String[]
+  interested               String[]
+  saveMerchant             String[]
+  saveProducts             String[]
+  productLimit             Float            @default(2)
+  number                   String?
+  whatsAppNumber           String?
+  ratingCount              Float            @default(0)
+  ratingTotal              Float            @default(0)
+  productCount             Float            @default(0)
+  policy                   String?
+  fbAccount                String?
+  fbBnsPage                String?
+  youtube                  String?
+  tikTok                   String?
+  instagram                String?
+  website                  String?
+  dateOfBirth              String?
+  companySize              String?
+  groupLink                String?
+  password                 String?
+  emailVerified            DateTime?
+  role                     String[]         @default(["USER"])
+  isActive                 Boolean          @default(false)
+  supportMember            Boolean          @default(false)
+  image                    String?
+  bannerImage              String?
+  sessions                 Session[]
+  Product                  Product[]
+  productReview            Review[]
+  Boosting                 Boosting[]
+  merchantReviews          MerchantReview[]
+  Promoting                Promoting[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Session {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  sessionToken String   @unique
+  userId       String   @db.ObjectId
+  email        String?
+  expires      DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Review {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  rating    Float
+  comment   String?
+  userName  String?
+  userId    String   @db.ObjectId
+  user      User?    @relation(fields: [userId], references: [id])
+  productId String   @db.ObjectId
+  product   Product? @relation(fields: [productId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Product {
+  id                String       @id @default(auto()) @map("_id") @db.ObjectId
+  productName       String?
+  productSlug       String?
+  sellerEmail       String?
+  description       String?
+  price             Float?
+  sellPrice         Float?
+  categoryName      String?
+  views             Float        @default(0)
+  ratingCount       Float        @default(0)
+  ratingTotal       Float        @default(0)
+  sku               String?
+  quantity          Float?
+  image             String[]     @default([])
+  tags              String[]
+  isDeleted         Boolean      @default(false)
+  published         Boolean      @default(true)
+  isPromoted        Boolean?
+  promoteType       PromoteType?
+  startDate         DateTime?
+  endDate           DateTime?
+  standardPromote   Boolean      @default(false)
+  standardStartDate DateTime?
+  standardEndDate   DateTime?    @default(now())
+  premiumPromote    Boolean      @default(false)
+  premiumStartDate  DateTime?
+  premiumEndDate    DateTime?    @default(now())
+  reviews           Review[]
+  Tags              Tags[]
+  Promoting         Promoting[]
+  merchantId        String       @db.ObjectId
+  merchant          User?        @relation(fields: [merchantId], references: [id])
+  Category          Category?    @relation(fields: [categoryId], references: [id])
+  categoryId        String?      @db.ObjectId
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+}
+
+model Category {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  image     String
+  isDeleted Boolean   @default(false)
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Partner {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  image     String?
+  isDeleted Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Tags {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  name       String   @unique
+  categoryId String?
+  Product    Product? @relation(fields: [productId], references: [id])
+  productId  String?  @db.ObjectId
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Blog {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  slug      String   @unique
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model BlogHero {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  image     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Boosting {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  type        String
+  category    String
+  productLink String
+  number      String
+  description String?
+  User        User?    @relation(fields: [userId], references: [id])
+  userId      String?  @db.ObjectId
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+enum PromoteType {
+  STANDARD
+  PREMIUM
+}
+
+enum PromoteStatus {
+  PENDING
+  SUCCESSFUL
+  CANCELED
+  FAILED
+}
+
+model Promoting {
+  id        String        @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  startDate DateTime      @default(now())
+  endDate   DateTime
+  price     String
+  orderId   String?
+  token     String?
+  duration  String
+  number    String?
+  isPayed   Boolean       @default(false)
+  type      PromoteType
+  status    PromoteStatus @default(PENDING)
+  Product   Product       @relation(fields: [productId], references: [id])
+  productId String        @db.ObjectId
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  User      User?         @relation(fields: [userId], references: [id])
+  userId    String?       @db.ObjectId
+}
+
+model ResetPassword {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  code       String
+  email      String
+  isVerified Boolean  @default(false)
+  expiryDate DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model MerchantSettings {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  price        Float    @default(399)
+  productLimit Float    @default(500)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model IdActiveSettings {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  price     Float    @default(399)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model NewIdActive {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  email     String
+  number    String?
+  UserId    String
+  orderId   String?
+  price     Float    @default(399)
+  isPayed   Boolean  @default(false)
+  query     Boolean  @default(false)
+  token     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model NewMerchants {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  email        String
+  address      String
+  price        String
+  productLimit String
+  UserId       String
+  orderId      String?
+  token        String?
+  isPayed      Boolean  @default(false)
+  query        Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
