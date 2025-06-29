@@ -64,12 +64,34 @@ model User {
   sessions                 Session[]
   Product                  Product[]
   productReview            Review[]
+  Account                  Account[]
   Boosting                 Boosting[]
   merchantReviews          MerchantReview[]
   Promoting                Promoting[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Account {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String   @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?  @db.String
+  access_token      String?  @db.String
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?  @db.String
+  session_state     String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
 }
 
 model Session {
@@ -101,7 +123,7 @@ model Product {
   id                String       @id @default(auto()) @map("_id") @db.ObjectId
   productName       String?
   productSlug       String?
-  sellerEmail       String?
+  number            String?
   description       String?
   price             Float?
   sellPrice         Float?
@@ -281,4 +303,11 @@ model NewMerchants {
   query        Boolean  @default(false)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+}
+
+model Benefits {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

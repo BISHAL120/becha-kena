@@ -43,8 +43,8 @@ const Menus: { title: string; href: string; sunMenu?: subMenu[] }[] = [
     href: "/admin",
   },
   {
-    title: "TRAINING",
-    href: "https://www.youtube.com/@bechakena",
+    title: "You Tube",
+    href: "https://www.youtube.com/@ProgrammingHeroCommunity",
   },
 ];
 
@@ -64,10 +64,14 @@ export async function DesktopNavigation({
   });
 
   return (
-    <NavigationMenu className={`${className} hidden md:block `}>
-      <NavigationMenuList className="">
-        <NavigationMenuItem className="">
-          <NavigationMenuTrigger>Getting started</NavigationMenuTrigger>
+    <NavigationMenu
+      className={`${className} hidden md:block max-w-[1650px] mx-auto py-3`}
+    >
+      <NavigationMenuList className="justify-start">
+        <NavigationMenuItem className=" ">
+          <NavigationMenuTrigger className="bg-transparent hover:cursor-pointer ">
+            Getting started
+          </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="flex flex-col gap-3 p-2 md:w-[100px] lg:w-[200px] lg:grid-cols-[.75fr_1fr]">
               {AllCategories.map((component) => (

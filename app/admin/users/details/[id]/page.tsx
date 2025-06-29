@@ -1,4 +1,4 @@
-import MerchantDetails from "@/components/client/users/merchantDetails";
+import MerchantDetails from "@/components/admin/aceternity Ui/users/merchantDetails";
 import db from "@/prisma/db";
 import React from "react";
 

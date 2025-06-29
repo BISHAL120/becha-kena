@@ -1,6 +1,6 @@
 import { Separator } from "@/components/ui/separator";
-import db from "@/prisma/db";
 import AllActivationTable from "./comonents/allActivation";
+import db from "@/prisma/db";
 
 const AllActivation = async () => {
   const allActivation = await db.newIdActive.findMany({

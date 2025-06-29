@@ -40,7 +40,7 @@ const LoginPage = () => {
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
-      number: "",
+      email: "",
       password: "",
     },
   });
@@ -55,7 +55,7 @@ const LoginPage = () => {
 
   async function onSubmit(values: z.infer<typeof LoginSchema>) {
     try {
-      toast.loading("প্রসেসিং...", {
+      toast.loading("Processing...", {
         style: {
           background: "#FFA500",
           border: "2px solid #FF8C00",
@@ -72,7 +72,7 @@ const LoginPage = () => {
       });
       if (result?.error) {
         toast.dismiss();
-        toast.error("নাম্বার বা পাসওয়ার্ডটি সঠিক নয়!", {
+        toast.error("Invalid number or password!", {
           style: {
             background: "red",
             border: "2px solid #DC2626",
@@ -86,7 +86,7 @@ const LoginPage = () => {
         });
       } else {
         toast.dismiss();
-        toast.success("লগইন সম্পন্ন হয়েছে", {
+        toast.success("Login successful!", {
           style: {
             background: "#22C55E",
             border: "2px solid #16A34A",
@@ -98,13 +98,13 @@ const LoginPage = () => {
           position: "top-center",
           icon: "✅",
         });
-        router.push(`/store`);
+        router.push(`/dashboard`);
         router.refresh();
       }
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      toast.error("নাম্বার বা পাসওয়ার্ডটি সঠিক নয়!", {
+      toast.error("An error occurred!", {
         style: {
           background: "red",
           border: "2px solid #DC2626",
@@ -206,7 +206,7 @@ const LoginPage = () => {
   }, [isTransitioning, CarouselDetails.length]);
 
   const addCredentialsWithAnimation = () => {
-    setValue("number", CarouselDetails[currentSlide].credentials?.number || "");
+    setValue("email", CarouselDetails[currentSlide].credentials?.number || "");
     setValue(
       "password",
       CarouselDetails[currentSlide].credentials?.password || ""
@@ -237,10 +237,10 @@ const LoginPage = () => {
           <Button
             asChild
             variant="outline"
-            className="flex items-center gap-2 hover:scale-105 transition-all duration-300 hover:shadow-lg cursor-pointer"
+            className="flex items-center gap-2 hover:scale-105 transition-all duration-300 hover:text-white  hover:shadow-lg cursor-pointer"
           >
             <Link href="/">
-              <ArrowLeft className="w-6 h-6 xl:w-8 xl:h-8 text-green-500 transition-all duration-300" />
+              <ArrowLeft className="w-6 h-6xl:w-8 xl:h-8 text-green-500 transition-all duration-300" />
               Back Home
             </Link>
           </Button>
@@ -408,14 +408,14 @@ const LoginPage = () => {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
               <FormField
                 control={form.control}
-                name="number"
+                name="email"
                 render={({ field }) => (
                   <FormItem
                     className="animate-fade-in-up stagger-animation"
                     style={{ "--index": 1 } as React.CSSProperties}
                   >
                     <FormLabel className="text-gray-700 font-medium">
-                      Mobile Number
+                      Email
                     </FormLabel>
                     <FormControl>
                       <div className="relative form-input">
@@ -424,10 +424,10 @@ const LoginPage = () => {
                         </div>
                         <Input
                           {...field}
-                          placeholder="017********"
-                          type="number"
+                          placeholder="Enter your email"
+                          type="email"
                           autoCapitalize="none"
-                          autoComplete="mobile"
+                          autoComplete="email"
                           autoCorrect="off"
                           disabled={isLoading}
                           className="pl-10 py-6 bg-white border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 backdrop-blur-sm"
@@ -496,7 +496,7 @@ const LoginPage = () => {
               </div>
 
               <Button
-                className="w-full py-6 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-medium rounded-xl transition-all duration-300 ease-in-out transform hover:scale-[1.02] hover:shadow-xl animate-fade-in-up stagger-animation relative overflow-hidden"
+                className="w-full py-6 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-medium rounded-xl transition-all duration-300 ease-in-out transform hover:scale-[1.02] hover:shadow-xl animate-fade-in-up stagger-animation relative overflow-hidden cursor-pointer"
                 style={{ "--index": 4 } as React.CSSProperties}
                 disabled={isLoading}
               >
@@ -522,6 +522,7 @@ const LoginPage = () => {
               <Button
                 type="button"
                 variant="outline"
+                onClick={() => signIn("google")}
                 className="w-full py-6 border-gray-200 hover:bg-white hover:shadow-lg font-medium rounded-xl flex items-center justify-center transition-all duration-300 transform hover:scale-[1.02] animate-fade-in-up stagger-animation group"
                 style={{ "--index": 6 } as React.CSSProperties}
               >

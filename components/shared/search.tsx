@@ -47,13 +47,13 @@ const SearchBar = ({ className }: { className?: string }) => {
   if (!products) return null;
 
   return (
-    <div className={`w-[60%] bg-background ${className}`}>
+    <div className={`w-[60%] ${className}`}>
       <div className="relative">
         <input
           type="text"
           value={searchQuery}
           placeholder="Search products..."
-          className="w-full px-4 py-2 border rounded-lg pr-10"
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg pr-10"
           onChange={(event) => {
             setSearchQuery(event.target.value);
           }}

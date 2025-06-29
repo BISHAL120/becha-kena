@@ -49,11 +49,11 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 interface InActiveProps {
-  number: string;
+  number: string | null;
   id: string;
   name: string;
   isActive: boolean;
-  division: string;
+  division: string | null;
   productCount: number;
   role: string[];
   supportMember: boolean;

@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Eye, EyeOff, Loader2, Lock, User } from "lucide-react";
+import { ArrowLeft, Eye, EyeOff, Loader2, Lock, User } from "lucide-react";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -21,6 +21,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { RegisterSchema } from "../../../lib/zod/register";
+import axios from "axios";
 
 const LoginPage = () => {
   const router = useRouter();
@@ -32,7 +33,7 @@ const LoginPage = () => {
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
       fullName: "",
-      number: "",
+      email: "",
       password: "",
     },
   });
@@ -45,68 +46,33 @@ const LoginPage = () => {
 
   async function onSubmit(values: z.infer<typeof RegisterSchema>) {
     try {
-      toast.loading("প্রসেসিং...", {
-        style: {
-          background: "#FFA500",
-          border: "2px solid #FF8C00",
-          color: "white",
-          fontWeight: "600",
-          fontSize: "16px",
-          padding: "10px 20px",
-        },
-      });
+      toast.loading("Processing...");
       setIsLoading(true);
-      const result = await signIn("credentials", {
-        ...values,
-        redirect: false,
-      });
-      if (result?.error) {
-        toast.dismiss();
-        toast.error("নাম্বার বা পাসওয়ার্ডটি সঠিক নয়!", {
-          style: {
-            background: "red",
-            border: "2px solid #DC2626",
-            color: "white",
-            fontWeight: "600",
-            fontSize: "16px",
-            padding: "10px 20px",
-          },
-          position: "top-center",
-          icon: "❌",
+      await axios
+        .post("/api/user", values)
+        .then((res) => {
+          if (res.data) {
+            toast.dismiss();
+            toast.success(`${res?.data?.message}`);
+          }
+        })
+        .then(async () => {
+          await signIn("credentials", {
+            email: values.email,
+            password: values.password,
+            redirect: false,
+          });
+          router.push("/dashboard");
+          toast.dismiss();
+          setIsLoading(false);
         });
-      } else {
-        toast.dismiss();
-        toast.success("লগইন সম্পন্ন হয়েছে", {
-          style: {
-            background: "#22C55E",
-            border: "2px solid #16A34A",
-            color: "white",
-            fontWeight: "600",
-            fontSize: "16px",
-            padding: "10px 20px",
-          },
-          position: "top-center",
-          icon: "✅",
-        });
-        router.push(`/store`);
-        router.refresh();
+      // eslint-disable-next-line
+    } catch (error: any) {
+      toast.dismiss();
+      setIsLoading(false);
+      if (error?.response) {
+        toast.error(`${error?.response?.data}`);
       }
-      setIsLoading(false);
-    } catch (error) {
-      setIsLoading(false);
-      toast.error("নাম্বার বা পাসওয়ার্ডটি সঠিক নয়!", {
-        style: {
-          background: "red",
-          border: "2px solid #DC2626",
-          color: "white",
-          fontWeight: "600",
-          fontSize: "16px",
-          padding: "10px 20px",
-        },
-        position: "top-center",
-        icon: "❌",
-      });
-      console.log("Error :", error);
     }
   }
 
@@ -121,35 +87,16 @@ const LoginPage = () => {
           style={{ animationDelay: "1s" } as React.CSSProperties}
         ></div>
 
-        <div className="absolute top-8 left-8 animate-fade-in-up">
+        <div className="absolute top-8 left-8 animate-fade-in-up ">
           <Button
+            asChild
             variant="outline"
-            className="flex items-center gap-2 hover:scale-105 transition-all duration-300 hover:shadow-lg"
+            className="flex items-center gap-2 hover:scale-105 transition-all duration-300 hover:text-white hover:shadow-lg cursor-pointer"
           >
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="transition-transform duration-300 group-hover:-translate-x-1"
-            >
-              <path
-                d="M19 12H5"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M12 19L5 12L12 5"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            Back Home
+            <Link href="/">
+              <ArrowLeft className="w-6 h-6 xl:w-8 xl:h-8 text-green-500 transition-all duration-300" />
+              Back Home
+            </Link>
           </Button>
         </div>
 
@@ -280,14 +227,14 @@ const LoginPage = () => {
               />
               <FormField
                 control={form.control}
-                name="number"
+                name="email"
                 render={({ field }) => (
                   <FormItem
                     className="animate-fade-in-up stagger-animation"
                     style={{ "--index": 1 } as React.CSSProperties}
                   >
                     <FormLabel className="text-gray-700 font-medium">
-                      Mobile Number
+                      Email
                     </FormLabel>
                     <FormControl>
                       <div className="relative form-input">
@@ -296,10 +243,10 @@ const LoginPage = () => {
                         </div>
                         <Input
                           {...field}
-                          placeholder="017********"
-                          type="number"
+                          placeholder="Email"
+                          type="email"
                           autoCapitalize="none"
-                          autoComplete="mobile"
+                          autoComplete="email"
                           autoCorrect="off"
                           disabled={isLoading}
                           className="pl-10 py-6 bg-white border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 backdrop-blur-sm"
@@ -355,7 +302,7 @@ const LoginPage = () => {
                 )}
               />
               <Button
-                className="w-full py-6 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-medium rounded-xl transition-all duration-300 ease-in-out transform hover:scale-[1.02] hover:shadow-xl animate-fade-in-up stagger-animation relative overflow-hidden"
+                className="w-full py-6 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-medium rounded-xl transition-all duration-300 ease-in-out transform hover:scale-[1.02] hover:shadow-xl animate-fade-in-up stagger-animation relative overflow-hidden cursor-pointer"
                 style={{ "--index": 4 } as React.CSSProperties}
                 disabled={isLoading}
               >

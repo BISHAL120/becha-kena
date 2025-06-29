@@ -9,10 +9,10 @@ import db from "@/prisma/db";
 import {
   Award,
   BellDot,
+  Box,
   ChartNoAxesCombinedIcon,
   Container,
   EditIcon,
-  LinkIcon,
   RssIcon,
 } from "lucide-react";
 import Link from "next/link";
@@ -96,10 +96,7 @@ const Dashboard = async ({
         )}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 px-2 py-3">
-        <Link
-          className="h-fit w-full min-w-[320px] min-h-[130px]"
-          href={`/users/${user?.id}`}
-        >
+        <Link className="" href={`/users/${user?.id}`}>
           <Card className="w-full h-full max-w-sm mx-auto dark:bg-background shadow-md dark:shadow-white/20">
             <CardHeader className="pb-4">
               <div className="flex justify-between items-center">
@@ -116,14 +113,11 @@ const Dashboard = async ({
               </div>
             </CardHeader>
             <CardContent className="text-muted-foreground">
-              Open public profile
+              View Profile Details
             </CardContent>
           </Card>
         </Link>
-        <Link
-          className="h-fit w-full min-w-[320px] min-h-[130px]"
-          href={`/users/edit`}
-        >
+        <Link className="" href={`/users/edit`}>
           <Card className="w-full h-fit max-w-sm mx-auto dark:bg-background shadow-md dark:shadow-white/20">
             <CardHeader className="pb-4 h-[80px]">
               <div className="flex justify-between items-center">
@@ -138,10 +132,7 @@ const Dashboard = async ({
             </CardContent>
           </Card>
         </Link>
-        <Link
-          className="h-fit w-full min-w-[320px] min-h-[130px]"
-          href={`/dashboard/boosting`}
-        >
+        <Link className="" href={`/dashboard/boosting`}>
           <Card className="w-full h-fit max-w-sm mx-auto dark:bg-background shadow-md dark:shadow-white/20">
             <CardHeader className="pb-4 h-[80px]">
               <div className="flex justify-between items-center">
@@ -156,10 +147,7 @@ const Dashboard = async ({
             </CardContent>
           </Card>
         </Link>
-        <Link
-          className="h-fit w-full min-w-[320px] min-h-[130px]"
-          href={`/dashboard/products?page=1&per_page=10`}
-        >
+        <Link className="" href={`/dashboard/products?page=1&per_page=10`}>
           <Card className="w-full h-fit max-w-sm mx-auto dark:bg-background shadow-md dark:shadow-white/20">
             <CardHeader className="pb-4 h-[80px]">
               <div className="flex justify-between items-center">
@@ -176,12 +164,6 @@ const Dashboard = async ({
         </Link>
         {findUser?.isActive && findUser.idDeactivationDate >= new Date() ? (
           <Link
-            className={`"h-fit w-full min-w-[320px] min-h-[130px] ${
-              um === "idActive"
-                ? " p-0.5 border  rounded-[15px] bg-gradient-to-r from-[#5568f6] to-[#50f32f] animate-gradient-x-loop"
-                : ""
-            }`}
-            // href={`/upgrade?id=${user?.id}`}
             href={`${
               findUser?.role.includes("MERCHANT") &&
               findUser.isActive &&
@@ -190,84 +172,92 @@ const Dashboard = async ({
                 : `/upgrade?id=${user?.id}`
             }`}
           >
-            <Card className="w-full h-fit max-w-sm mx-auto dark:bg-background shadow-md dark:shadow-white/20">
-              <CardHeader className="pb-4 h-[80px]">
-                <div className="flex justify-between items-center">
-                  <h3
-                    className={`text-lg font-semibold ${
-                      um === "idActive" ? "gradient-text2" : ""
-                    }`}
-                  >
-                    {findUser?.role.includes("MERCHANT") &&
-                    findUser.isActive &&
-                    findUser.merchantDeactivationDate >= new Date()
-                      ? "Active Merchant"
-                      : "Upgrade to Merchant"}
-                  </h3>
-                  <div>
-                    <RssIcon className="h-6 w-6" />
+            <div
+              className={`" ${
+                um === "idActive"
+                  ? " p-0.5 border  rounded-[15px] bg-gradient-to-r from-[#5568f6] to-[#50f32f]"
+                  : ""
+              }`}
+            >
+              <Card className="w-full h-fit max-w-sm mx-auto dark:bg-background shadow-md dark:shadow-white/20">
+                <CardHeader className="pb-4 h-[80px]">
+                  <div className="flex justify-between items-center">
+                    <h3
+                      className={`text-lg font-semibold ${
+                        um === "idActive" ? "gradient-text2" : ""
+                      }`}
+                    >
+                      {findUser?.role.includes("MERCHANT") &&
+                      findUser.isActive &&
+                      findUser.merchantDeactivationDate >= new Date()
+                        ? "Active Merchant"
+                        : "Upgrade to Merchant"}
+                    </h3>
+                    <div>
+                      <RssIcon className="h-6 w-6" />
+                    </div>
                   </div>
-                </div>
-              </CardHeader>
-              <CardContent
-                className={`text-muted-foreground ${
-                  um === "idActive" ? "gradient-text" : ""
-                }`}
-              >
-                {findUser?.role.includes("MERCHANT") &&
-                findUser.isActive &&
-                findUser.merchantDeactivationDate >= new Date()
-                  ? "Merchant ID is Activated"
-                  : "Upgrade to Merchant"}
-              </CardContent>
-            </Card>
+                </CardHeader>
+                <CardContent
+                  className={`text-muted-foreground ${
+                    um === "idActive" ? "gradient-text" : ""
+                  }`}
+                >
+                  {findUser?.role.includes("MERCHANT") &&
+                  findUser.isActive &&
+                  findUser.merchantDeactivationDate >= new Date()
+                    ? "Merchant ID is Activated"
+                    : "Upgrade to Merchant"}
+                </CardContent>
+              </Card>
+            </div>
           </Link>
         ) : (
-          <Link
-            className={`"h-fit w-full min-w-[320px] min-h-[130px] ${
-              um === "idActive"
-                ? " p-0.5 border  rounded-[15px] bg-gradient-to-r from-[#5568f6] to-[#50f32f] animate-gradient-x-loop"
-                : ""
-            }`}
-            href={`/active?id=${user?.id}`}
-          >
-            <Card className="w-full h-fit max-w-sm mx-auto dark:bg-background shadow-md dark:shadow-white/20">
-              <CardHeader className="pb-4 h-[80px]">
-                <div className="flex justify-between items-center">
-                  <h3
-                    className={`text-lg font-semibold ${
-                      um === "idActive" ? "gradient-text2" : ""
-                    }`}
-                  >
-                    {findUser?.role.includes("MERCHANT") &&
-                    findUser.isActive &&
-                    findUser.idDeactivationDate >= new Date()
-                      ? "Account Activated"
-                      : "Activate Id"}
-                  </h3>
-                  <div>
-                    <RssIcon className="h-6 w-6" />
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent
-                className={`text-muted-foreground ${
-                  um === "idActive" ? "gradient-text" : ""
-                }`}
+          <Link href={`/active?id=${user?.id}`}>
+            <div
+              className={`${
+                um === "idActive"
+                  ? " p-0.5 border  rounded-[15px] bg-gradient-to-r from-[#5568f6] to-[#50f32f]"
+                  : ""
+              }`}
+            >
+              <Card
+                className={`w-full h-fit max-w-sm mx-auto dark:bg-background shadow-md dark:shadow-white/20`}
               >
-                {findUser?.role.includes("MERCHANT") &&
-                findUser.isActive &&
-                findUser.idDeactivationDate >= new Date()
-                  ? "You are a Merchant Now"
-                  : "Active Your Account"}
-              </CardContent>
-            </Card>
+                <CardHeader className="pb-4 h-[80px]">
+                  <div className="flex justify-between items-center">
+                    <h3
+                      className={`text-lg font-semibold ${
+                        um === "idActive" ? "gradient-text2" : ""
+                      }`}
+                    >
+                      {findUser?.role.includes("MERCHANT") &&
+                      findUser.isActive &&
+                      findUser.idDeactivationDate >= new Date()
+                        ? "Account Activated"
+                        : "Activate Id"}
+                    </h3>
+                    <div>
+                      <RssIcon className="h-6 w-6" />
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent
+                  className={`text-muted-foreground ${
+                    um === "idActive" ? "gradient-text" : ""
+                  }`}
+                >
+                  {findUser?.role.includes("MERCHANT") &&
+                  findUser.isActive &&
+                  findUser.idDeactivationDate >= new Date()
+                    ? "You are a Merchant Now"
+                    : "Active Your Account"}
+                </CardContent>
+              </Card>
+            </div>
           </Link>
         )}
-        <Link
-          className="h-fit w-full min-w-[320px] min-h-[130px]"
-          href={`/dashboard/notification`}
-        >
+        <Link className="" href={`/dashboard/notification`}>
           <Card className="w-full h-fit max-w-sm mx-auto dark:bg-background shadow-md dark:shadow-white/20">
             <CardHeader className="pb-4 h-[80px]">
               <div className="flex justify-between items-center">
@@ -282,35 +272,32 @@ const Dashboard = async ({
             </CardContent>
           </Card>
         </Link>
-        <Link
-          className="h-fit w-full min-w-[320px] min-h-[130px]"
-          href={`/dashboard/links`}
-        >
+        <Link className="" href={`/dashboard/orders`}>
           <Card className="w-full h-fit max-w-sm mx-auto dark:bg-background shadow-md dark:shadow-white/20">
             <CardHeader className="pb-4 h-[80px]">
               <div className="flex justify-between items-center">
-                <h3 className="text-lg font-semibold">Links</h3>
+                <h3 className="text-lg font-semibold">Orders</h3>
                 <div>
-                  <LinkIcon className="h-6 w-6" />
+                  <Box className="h-6 w-6" />
                 </div>
               </div>
             </CardHeader>
             <CardContent className="text-muted-foreground">
-              View All Training and classes
+              View All Your Orders
             </CardContent>
           </Card>
         </Link>
         <Link
-          className={`h-fit w-full min-w-[320px] min-h-[130px]  max-w-[380px] mx-auto ${
+          className={` ${
             um === "idActive"
               ? ""
-              : "p-0.5 border rounded-[15px] bg-gradient-to-r from-blue-600 via-pink-300 to-yellow-500 animate-gradient-x-loop"
+              : "p-0.5 border rounded-[15px] bg-gradient-to-r from-blue-600 via-pink-300 to-yellow-500"
           }`}
           href={`https://wa.me/+8801623939834?text=আমি আমার ব্যবসা জন্য একটি ওয়েবসাইট বানাতে চাচ্ছি। এই বিসয়ে আরও জানতে চাচ্ছি।`}
           target="_blank"
         >
-          <Card className="w-full  min-h-[130px] flex-1 max-w-sm mx-auto dark:bg-background shadow-md dark:shadow-white/20">
-            <CardHeader className="pb-4 pt-4 h-[60px]">
+          <Card className=" dark:bg-background shadow-md dark:shadow-white/20">
+            <CardHeader className="">
               <div className="flex justify-between items-center">
                 <h3
                   className={`text-lg font-semibold ${

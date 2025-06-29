@@ -12,6 +12,7 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
       email: session?.user.email || "",
     },
     select: {
+      email: true,
       name: true,
       role: true,
       image: true,
@@ -20,13 +21,13 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div>
-      <div className="xl:max-w-[1350px] min-h-[calc(100vh-120px)] md:mx-auto relative">
+      <div className="min-h-[calc(100vh-120px)] md:mx-auto relative">
         <Navbar number={session && session.user.email!} user={user} />
         <MobileNavbar user={user} />
-        <div className="mb-[65px]">{children}</div>
+        <div className="mb-[65px] xl:max-w-[1650px] mx-auto">{children}</div>
         <BottomNavigation email={session && session.user.email!} />
+        <Footer />
       </div>
-      <Footer />
     </div>
   );
 };

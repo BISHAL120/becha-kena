@@ -1,4 +1,4 @@
-import DashboardPage from "@/components/admin/aceternity Ui/dashboard";
+import DashboardPage from "@/components/admin/dashboard";
 import db from "@/prisma/db";
 import React from "react";
 

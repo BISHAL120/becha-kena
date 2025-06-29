@@ -1,27 +1,27 @@
 import Link from "next/link";
 import Logo from "../ui/logo";
-import { Separator } from "../ui/separator";
 import { DesktopNavigation } from "./desktop";
 import SearchBar from "./search";
-import { ToggleButton } from "./toggleButton";
 import UserButton from "./userButton";
 
 interface NavbarProps {
   number: string | null;
   user: {
     name: string;
+    email: string;
     role: string[];
   } | null;
 }
 
 const Navbar = async ({ number, user }: NavbarProps) => {
+  // console.log(user);
   return (
-    <div className="sticky z-50 top-0 bg-neutral-50 dark:bg-background pb-1 ">
-      <div className="hidden md:block pt-5 w-full px-3 py-2 pb-3 space-y-2">
+    <div className="w-full sticky z-50 top-0 dark:bg-background bg-primary text-white">
+      <div className="hidden xl:max-w-[1550px] mx-auto md:block  w-full px-3 py-6 space-y-2">
         <div className="flex justify-between items-center ">
           <Link href="/" className="flex justify-center items-center gap-1">
             <Logo />
-            <h2 className="text-2xl font-bold text-gray-900">
+            <h2 className="text-2xl font-bold text-slate-50">
               BECHA{" "}
               <span className="text-green-500 bg-gradient-to-r from-green-500 to-green-600 bg-clip-text">
                 KENA
@@ -31,8 +31,6 @@ const Navbar = async ({ number, user }: NavbarProps) => {
           {/* Search Bar */}
           <SearchBar />
           <div className="flex justify-center items-center gap-4">
-            <ToggleButton />
-
             {number ? (
               <UserButton user={user} />
             ) : (
@@ -44,11 +42,10 @@ const Navbar = async ({ number, user }: NavbarProps) => {
             )}
           </div>
         </div>
-        <div className="">
-          <DesktopNavigation role={user?.role} className="w-full" />
-        </div>
       </div>
-      <Separator />
+      <div className="bg-[#72a3ce] dark:bg-slate-800">
+        <DesktopNavigation role={user?.role} className="w-full" />
+      </div>
     </div>
   );
 };

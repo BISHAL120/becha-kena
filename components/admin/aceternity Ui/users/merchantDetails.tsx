@@ -23,12 +23,12 @@ import Image from "next/image";
 import Link from "next/link";
 
 interface MerchantDetailsProps {
-  number: string;
+  number: string | null;
   name: string;
   shopName: string | null;
   address: string | null;
-  businessCategory: string;
-  division: string;
+  businessCategory: string | null;
+  division: string | null;
   district: string | null;
   whatsAppNumber: string | null;
   website: string | null;

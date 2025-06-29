@@ -37,7 +37,7 @@ const Products = async ({
   });
 
   return (
-    <div>
+    <div className="min-h-[calc(100vh-150px)]">
       <ProductTable
         page={page}
         per_page={per_page}

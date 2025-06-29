@@ -51,10 +51,10 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 interface UserProps {
-  number: string;
+  number: string | null;
   id: string;
   name: string;
-  division: string;
+  division: string | null;
   isActive: boolean;
   productCount: number;
   role: string[];

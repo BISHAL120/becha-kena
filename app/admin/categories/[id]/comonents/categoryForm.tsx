@@ -20,6 +20,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
+import LoadingSpinner from "@/components/ui/spinner";
 import { storage } from "@/lib/firebase";
 import { Category } from "@prisma/client";
 import {
@@ -32,7 +33,6 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
 import { Heading } from "../../comonents/heading";
-import LoadingSpinner from "@/components/ui/spinner";
 
 const formSchema = z.object({
   name: z.string().min(2),

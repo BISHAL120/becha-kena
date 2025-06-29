@@ -1,4 +1,4 @@
-import { InActiveUserTable } from "@/components/client/users/inActiveUserTable";
+import { InActiveUserTable } from "@/components/admin/aceternity Ui/users/inActiveUserTable";
 import db from "@/prisma/db";
 
 const InActiveUSers = async ({

@@ -138,7 +138,9 @@ const AllActivationTable: React.FC<AllActivationTableProps> = ({
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 onClick={() => {
-                  navigator.clipboard.writeText(partner.number || "");
+                  navigator.clipboard.writeText(
+                    partner.number || "Not Available"
+                  );
                   toast.success("ID copied to clipboard");
                 }}
               >

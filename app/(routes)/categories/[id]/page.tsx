@@ -18,17 +18,6 @@ const Products = async ({
   const { page = "1", per_page = "5", division = "all" } = await searchParams;
   const { id } = await params;
 
-  // const total = await db.product.count({
-  //   where: {
-  //     published: true,
-  //     isDeleted: false,
-  //     categoryId: category !== "all" ? category : undefined,
-  //     merchant: {
-  //       division: division !== "all" ? division : undefined,
-  //     },
-  //   },
-  // });
-
   const standardProductCount = await db.product.count({
     where: {
       published: true,

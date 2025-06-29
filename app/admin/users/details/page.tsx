@@ -1,4 +1,4 @@
-import { MerchantTable } from "@/components/client/users/mercantTable";
+import { MerchantTable } from "@/components/admin/aceternity Ui/users/mercantTable";
 import db from "@/prisma/db";
 import React from "react";
 

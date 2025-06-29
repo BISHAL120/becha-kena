@@ -41,10 +41,10 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface MerchantsProps {
-  number: string;
+  number: string | null;
   id: string;
   name: string;
-  division: string;
+  division: string | null;
   productCount: number;
   role: string[];
   image: string | null;

@@ -1,4 +1,4 @@
-import { AllUserTable } from "@/components/client/users/allUserTable";
+import { AllUserTable } from "@/components/admin/aceternity Ui/users/allUserTable";
 import db from "@/prisma/db";
 import React from "react";
 

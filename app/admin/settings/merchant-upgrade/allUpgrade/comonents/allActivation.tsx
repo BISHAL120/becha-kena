@@ -82,9 +82,9 @@ const MerchantUpgradeTable: React.FC<MerchantUpgradeTableProps> = ({
       ),
     },
     {
-      accessorKey: "email",
+      accessorKey: "Email",
       header: "Email",
-      cell: ({ row }) => <div>{row.original.email}</div>,
+      cell: ({ row }) => <div>{row.original?.email}</div>,
     },
     {
       accessorKey: "query",
@@ -138,12 +138,14 @@ const MerchantUpgradeTable: React.FC<MerchantUpgradeTableProps> = ({
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 onClick={() => {
-                  navigator.clipboard.writeText(partner.email);
-                  toast.success("Email copied to clipboard");
+                  navigator.clipboard.writeText(
+                    partner?.email || "Not Available"
+                  );
+                  toast.success("ID copied to clipboard");
                 }}
               >
                 <Copy />
-                Copy Email
+                Copy Number
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => {
