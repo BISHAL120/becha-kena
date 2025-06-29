@@ -138,7 +138,7 @@ const LoginPage = () => {
       desc: "Login with super admin credentials.",
       image: "/assets/auth/super admin.avif",
       credentials: {
-        number: "01312604691",
+        number: "monerulmd5@gmail.com",
         password: "aaaaaaaa",
       },
     },
@@ -148,8 +148,8 @@ const LoginPage = () => {
       desc: "Login with admin credentials.",
       image: "/assets/auth/admin.jpg",
       credentials: {
-        number: "01712604691",
-        password: "12345678",
+        number: "monerulislambishal@gmail.com",
+        password: "aaaaaaaa",
       },
     },
     {
@@ -158,7 +158,7 @@ const LoginPage = () => {
       desc: "Login with your registered number and password.",
       image: "/assets/auth/user login.jpg",
       credentials: {
-        number: "01312604691",
+        number: "demouser@gmail.com",
         password: "aaaaaaaa",
       },
     },
@@ -419,8 +419,8 @@ const LoginPage = () => {
                     </FormLabel>
                     <FormControl>
                       <div className="relative form-input">
-                        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 transition-colors duration-300">
-                          <User className="h-5 w-5" />
+                        <div className="absolute left-3 top-1/2 -translate-y-1/2 z-50 ">
+                          <User className="h-5 w-5  " />
                         </div>
                         <Input
                           {...field}
@@ -430,7 +430,7 @@ const LoginPage = () => {
                           autoComplete="email"
                           autoCorrect="off"
                           disabled={isLoading}
-                          className="pl-10 py-6 bg-white border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 backdrop-blur-sm"
+                          className="pl-10 py-6 bg-white text-black border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 backdrop-blur-sm"
                         />
                       </div>
                     </FormControl>
@@ -452,7 +452,7 @@ const LoginPage = () => {
                     </FormLabel>
                     <FormControl>
                       <div className="relative form-input">
-                        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 transition-colors duration-300">
+                        <div className="absolute left-3 top-1/2 -translate-y-1/2 z-50 text-gray-400 transition-colors duration-300">
                           <Lock className="h-5 w-5" />
                         </div>
                         <Input
@@ -460,7 +460,7 @@ const LoginPage = () => {
                           type={showPassword ? "text" : "password"}
                           disabled={isLoading}
                           placeholder="Enter your password"
-                          className="pl-10 py-6 bg-white border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 backdrop-blur-sm"
+                          className="pl-10 py-6 bg-white text-black border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 backdrop-blur-sm"
                         />
 
                         <Button
@@ -496,7 +496,7 @@ const LoginPage = () => {
               </div>
 
               <Button
-                className="w-full py-6 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-medium rounded-xl transition-all duration-300 ease-in-out transform hover:scale-[1.02] hover:shadow-xl animate-fade-in-up stagger-animation relative overflow-hidden cursor-pointer"
+                className="w-full py-6 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 font-medium rounded-xl transition-all duration-300 ease-in-out transform hover:scale-[1.02] hover:shadow-xl animate-fade-in-up stagger-animation relative overflow-hidden cursor-pointer text-white "
                 style={{ "--index": 4 } as React.CSSProperties}
                 disabled={isLoading}
               >
@@ -523,8 +523,7 @@ const LoginPage = () => {
                 type="button"
                 variant="outline"
                 onClick={() => signIn("google")}
-                className="w-full py-6 border-gray-200 hover:bg-white hover:shadow-lg font-medium rounded-xl flex items-center justify-center transition-all duration-300 transform hover:scale-[1.02] animate-fade-in-up stagger-animation group"
-                style={{ "--index": 6 } as React.CSSProperties}
+                className="w-full py-6 border-gray-200 hover:text-black hover:bg-white hover:shadow-lg font-medium rounded-xl flex items-center justify-center transition-all duration-300 transform hover:scale-[1.02] animate-fade-in-up group"
               >
                 <svg
                   className="mr-2 h-5 w-5 transition-transform duration-300 group-hover:rotate-12"

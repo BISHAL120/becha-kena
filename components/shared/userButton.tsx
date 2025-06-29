@@ -35,7 +35,7 @@ const Profile = async ({ user }: ProfileProps) => {
           </DropdownMenuTrigger>
           <DropdownMenuContent
             side="bottom"
-            className="w-56 rounded-xl border border-gray-200 bg-white/95 backdrop-blur-sm shadow-lg dark:bg-gray-800/95 dark:border-gray-700"
+            className="w-56 overflow-hidden rounded-xl border border-gray-200 bg-white/95 backdrop-blur-sm shadow-lg dark:bg-gray-800/95 dark:border-gray-700"
           >
             <DropdownMenuLabel className="flex justify-between items-center px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200">
               Account Settings <ToggleButton />

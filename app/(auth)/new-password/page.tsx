@@ -99,6 +99,7 @@ export default function LoginPage() {
                         type={showPassword ? "text" : "password"}
                         disabled={isLoading}
                         placeholder="Enter your password"
+                        className="text-black"
                       />
 
                       <Button
@@ -135,6 +136,7 @@ export default function LoginPage() {
                       type="password"
                       placeholder="Confirm Your Password"
                       disabled={isLoading}
+                      className="text-black"
                     />
                   </div>
                 </FormControl>

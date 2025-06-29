@@ -117,6 +117,12 @@ button {
   cursor: pointer;
 }
 
+button, input {
+  .dark {
+    color: black
+  }
+  color: black
+}
 
 @layer base {
   * {

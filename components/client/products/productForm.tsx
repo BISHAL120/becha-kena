@@ -273,7 +273,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
             if (res.status === 200) {
               toast.dismiss();
               setIsLoading(false);
-              // router.push("/dashboard/products");
+              router.push("/dashboard/products");
               router.refresh();
               toast.success(res.data.message);
             }
@@ -281,7 +281,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
           .catch((error) => {
             toast.dismiss();
             setIsLoading(false);
-            // router.push("/dashboard/products");
+            router.push("/dashboard/products");
             router.refresh();
             toast.error(`${error.response.data.message}`);
             console.error(error);

@@ -207,7 +207,7 @@ const LoginPage = () => {
                     </FormLabel>
                     <FormControl>
                       <div className="relative form-input">
-                        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 transition-colors duration-300">
+                        <div className="absolute left-3 top-1/2 -translate-y-1/2 z-50 text-gray-400 transition-colors duration-300">
                           <User className="h-5 w-5" />
                         </div>
                         <Input
@@ -238,7 +238,7 @@ const LoginPage = () => {
                     </FormLabel>
                     <FormControl>
                       <div className="relative form-input">
-                        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 transition-colors duration-300">
+                        <div className="absolute left-3 top-1/2 -translate-y-1/2 z-50 text-gray-400 transition-colors duration-300">
                           <User className="h-5 w-5" />
                         </div>
                         <Input
@@ -271,7 +271,7 @@ const LoginPage = () => {
                     </FormLabel>
                     <FormControl>
                       <div className="relative form-input">
-                        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 transition-colors duration-300">
+                        <div className="absolute left-3 top-1/2 -translate-y-1/2 z-50 text-gray-400 transition-colors duration-300">
                           <Lock className="h-5 w-5" />
                         </div>
                         <Input

@@ -147,7 +147,10 @@ export function ProductTable({
           <div>
             <div className="font-medium">{row.original.productName}</div>
             <div className="text-sm text-muted-foreground">
-              {row.original.description}
+              {row.original.description?.slice(0, 40)}
+              {row.original.description && row.original.description.length > 40
+                ? "..."
+                : ""}
             </div>
           </div>
         </div>
