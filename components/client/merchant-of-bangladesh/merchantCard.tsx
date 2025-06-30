@@ -75,7 +75,7 @@ export function MerchantCard({ merchant, current }: MerchantCardProps) {
   };
 
   return (
-    <Card className="overflow-hidden">
+    <Card className="overflow-hidden p-0">
       <CardContent className="p-0">
         <div className="relative h-48 bg-muted">
           <Image

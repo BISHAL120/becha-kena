@@ -19,11 +19,7 @@ const Edit = async () => {
       name: true,
     },
   });
-  return (
-    <div>
-      <EditProfile initialData={user} Categories={categories} />
-    </div>
-  );
+  return <EditProfile initialData={user} Categories={categories} />;
 };
 
 export default Edit;

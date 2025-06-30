@@ -172,36 +172,6 @@ const ProductDetails = ({
     }
   };
 
-  /*   const downloadAllImages = async (imageLinks: string[]) => {
-    toast.loading("Downloading images...");
-    try {
-      for (let i = 0; i < imageLinks.length; i++) {
-        const url = imageLinks[i];
-        const response = await fetch(url);
-        const blob = await response.blob();
-        const blobUrl = URL.createObjectURL(blob);
-
-        const link = document.createElement("a");
-        link.href = blobUrl;
-        link.download = `image_${i + 1}.jpg`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
-        // Clean up the blob URL
-        URL.revokeObjectURL(blobUrl);
-
-        // Add a small delay between downloads to prevent browser from blocking multiple downloads
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-      }
-
-      toast.success("All images have been downloaded successfully!");
-    } catch (error) {
-      console.error("Error downloading images:", error);
-      alert("There was an error downloading the images. Please try again.");
-    }
-  }; */
-
   const downloadAllImages = async (imageLinks: string[]) => {
     toast.loading("Downloading images...");
     try {
@@ -309,174 +279,168 @@ const ProductDetails = ({
                     {product.categoryName}
                   </p>
                 </div>
-                {session && (
-                  <div className="hidden md:block">
-                    <DetailsButton
-                      id={product.id}
-                      userId={product.merchant?.id}
-                      name={product.productName ?? ""}
-                      user={product.merchant}
-                    />
-                  </div>
-                )}
-              </div>
-              {session &&
-                currentUser?.isActive &&
-                currentUser.idDeactivationDate >= new Date() && (
-                  <div className="flex items-center justify-between gap-4 mb-10">
-                    <div className="flex items-center gap-2">
-                      <p className="text-2xl font-bold">
-                        {Intl.NumberFormat("bn-BD", {
-                          style: "currency",
-                          currency: "BDT",
-                        }).format(product.sellPrice || 0)}
-                      </p>
-                      <p className="text-base font-semibold text-muted-foreground line-through">
-                        {Intl.NumberFormat("bn-BD", {
-                          style: "currency",
-                          currency: "BDT",
-                        }).format(product.price || 0)}
-                      </p>
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <p className="text-sm text-muted-foreground">
-                          {isNaN(rating) ? "0.0" : rating.toFixed(1)}
-                        </p>
-                        <Star fill="#fbbf24" stroke="#fbbf24" className="w-5" />
-                      </div>
-                    </div>
-                  </div>
-                )}
-            </div>
-            {/* Seller Info */}
-            {session &&
-              currentUser?.isActive &&
-              currentUser.idDeactivationDate >= new Date() && (
-                <div className="flex items-center justify-between ">
-                  <Link
-                    href="/users/01312604691"
-                    className="flex items-center gap-5"
-                  >
-                    <div className="relative">
-                      <Avatar className="ring-2 ring-offset-2">
-                        <AvatarImage
-                          className="object-cover"
-                          src="/demoImage/profile.jpg"
-                        />
-                        <AvatarFallback>AB</AvatarFallback>
-                      </Avatar>
-
-                      <BadgeCheck
-                        size={18}
-                        fill="#8b5cf6"
-                        stroke="white"
-                        className="absolute -top-1 -right-1"
-                      />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold">
-                        {product.merchant?.name}
-                        <span>
-                          <StarRating rating={rating} />
-                        </span>
-                      </h3>
-                    </div>
-                  </Link>
-
-                  {/* TODO: Add a loader when saving and disable the save and remove button */}
-                  {product.merchant?.saveMerchant?.includes(
-                    product.merchantId
-                  ) ? (
-                    <Button
-                      onClick={() => {
-                        handleRemoveMerchant();
-                      }}
-                      className="text-sm bg-red-500 hover:bg-red-600 dark:text-white"
-                    >
-                      Removed <BookmarkMinusIcon />
-                    </Button>
-                  ) : (
-                    <Button
-                      onClick={() => {
-                        handleSaveMerchant();
-                      }}
-                      className="text-sm bg-blue-500 hover:bg-blue-600 dark:text-white"
-                    >
-                      Save Seller <BookmarkPlusIcon />
-                    </Button>
-                  )}
-                </div>
-              )}
-            {/* Contact Buttons */}
-            {session &&
-              currentUser?.isActive &&
-              currentUser.idDeactivationDate >= new Date() && (
-                <div className="flex flex-col gap-4 mt-5">
-                  <Link
-                    href={`https://wa.me/+8801843432824?text=${message}`}
-                    target="_blank"
-                    className="w-full bg-green-500 hover:bg-green-600 flex justify-center items-center py-2 rounded-md text-white"
-                  >
-                    <Phone className="mr-2 h-4 w-4" /> WhatsApp
-                  </Link>
-                  <Button
-                    onClick={() => downloadAllImages(product.image || [])}
-                    variant="outline"
-                    className="w-full text-base h-10"
-                  >
-                    <Download className="h-5 w-5" /> Download All Images
-                  </Button>
-                  <ProductReviewDialog
-                    title="Product Review"
-                    userId={product.merchantId}
-                    Id={product.id}
-                    ratingType="product"
+                {/*  {session && ( */}
+                <div className="hidden md:block">
+                  <DetailsButton
+                    id={product.id}
+                    userId={product.merchant?.id}
+                    name={product.productName ?? ""}
+                    user={product.merchant}
                   />
                 </div>
-              )}
-            {/* Product Location SKU and Report Button */}
-            {session &&
-              currentUser?.isActive &&
-              currentUser.idDeactivationDate >= new Date() && (
-                <div className="flex flex-col gap-2">
-                  <div className="flex items-center gap-5">
-                    <p className="text-sm font-medium  min-w-20">Stock :</p>{" "}
-                    <p className="text-muted-foreground">{product.quantity}</p>
-                  </div>
-                  <div className="flex items-center gap-5">
-                    <p className="text-sm font-medium  min-w-20">
-                      Product ID :
-                    </p>{" "}
-                    <p className="text-muted-foreground">
-                      {/* TODO: Add product SKU */}
-                      {product.sku?.padStart(4, "0")}
+                {/*  )} */}
+              </div>
+              {/*  {session &&
+                currentUser?.isActive &&
+                currentUser.idDeactivationDate >= new Date() && ( */}
+              <div className="flex items-center justify-between gap-4 mb-4">
+                <div className="flex items-center gap-2">
+                  <p className="text-2xl font-bold">
+                    {Intl.NumberFormat("bn-BD", {
+                      style: "currency",
+                      currency: "BDT",
+                    }).format(product.sellPrice || 0)}
+                  </p>
+                  <p className="text-base font-semibold text-muted-foreground line-through">
+                    {Intl.NumberFormat("bn-BD", {
+                      style: "currency",
+                      currency: "BDT",
+                    }).format(product.price || 0)}
+                  </p>
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <p className="text-sm text-muted-foreground">
+                      {isNaN(rating) ? "0.0" : rating.toFixed(1)}
                     </p>
-                  </div>
-                  <div className="flex items-center gap-5">
-                    <p className="text-sm font-medium  min-w-20">Location :</p>{" "}
-                    <p className="text-muted-foreground">
-                      {product.merchant?.address}
-                    </p>
-                  </div>
-
-                  <div className="flex items-center gap-5">
-                    <p className="text-sm font-medium  min-w-20">
-                      Total View :
-                    </p>{" "}
-                    <p className="text-muted-foreground">{product.views}</p>
+                    <Star fill="#fbbf24" stroke="#fbbf24" className="w-5" />
                   </div>
                 </div>
+              </div>
+              {/*   )} */}
+            </div>
+            {/* Seller Info */}
+            {/* {session &&
+              currentUser?.isActive &&
+              currentUser.idDeactivationDate >= new Date() && ( */}
+            <div className="flex items-center justify-between ">
+              <Link
+                href={`/users/profile/${product.merchantId}`}
+                className="flex items-center gap-5"
+              >
+                <div className="relative">
+                  <Avatar className="ring-2 ring-offset-2">
+                    <AvatarImage
+                      className="object-cover"
+                      src="/demoImage/profile.jpg"
+                    />
+                    <AvatarFallback>AB</AvatarFallback>
+                  </Avatar>
+
+                  <BadgeCheck
+                    size={18}
+                    fill="#8b5cf6"
+                    stroke="white"
+                    className="absolute -top-1 -right-1"
+                  />
+                </div>
+                <div>
+                  <h3 className="font-semibold">
+                    {product.merchant?.name}
+                    <span>
+                      <StarRating rating={rating} />
+                    </span>
+                  </h3>
+                </div>
+              </Link>
+
+              {/* TODO: Add a loader when saving and disable the save and remove button */}
+              {product.merchant?.saveMerchant?.includes(product.merchantId) ? (
+                <Button
+                  onClick={() => {
+                    handleRemoveMerchant();
+                  }}
+                  className="text-sm bg-red-500 hover:bg-red-600 dark:text-white"
+                >
+                  Removed <BookmarkMinusIcon />
+                </Button>
+              ) : (
+                <Button
+                  onClick={() => {
+                    handleSaveMerchant();
+                  }}
+                  className="text-sm bg-blue-500 hover:bg-blue-600 dark:text-white"
+                >
+                  Save Seller <BookmarkPlusIcon />
+                </Button>
               )}
-            {!session && (
+            </div>
+            {/*   )}  */}
+            {/* Contact Buttons */}
+            {/* {session &&
+              currentUser?.isActive &&
+              currentUser.idDeactivationDate >= new Date() && ( */}
+            <div className="flex flex-col gap-4 mt-5">
+              <Link
+                href={`https://wa.me/+8801843432824?text=${message}`}
+                target="_blank"
+                className="w-full bg-green-500 hover:bg-green-600 flex justify-center items-center py-2 rounded-md text-white"
+              >
+                <Phone className="mr-2 h-4 w-4" /> WhatsApp
+              </Link>
+              <Button
+                onClick={() => downloadAllImages(product.image || [])}
+                variant="outline"
+                className="w-full text-base h-10"
+              >
+                <Download className="h-5 w-5" /> Download All Images
+              </Button>
+              <ProductReviewDialog
+                title="Product Review"
+                userId={product.merchantId}
+                Id={product.id}
+                ratingType="product"
+              />
+            </div>
+            {/*   )}  */}
+            {/* Product Location SKU and Report Button */}
+            {/* {session &&
+              currentUser?.isActive &&
+              currentUser.idDeactivationDate >= new Date() && ( */}
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-5">
+                <p className="text-sm font-medium  min-w-20">Stock :</p>{" "}
+                <p className="text-muted-foreground">{product.quantity}</p>
+              </div>
+              <div className="flex items-center gap-5">
+                <p className="text-sm font-medium  min-w-20">Product ID :</p>{" "}
+                <p className="text-muted-foreground">
+                  {/* TODO: Add product SKU */}
+                  {product.sku?.padStart(4, "0")}
+                </p>
+              </div>
+              <div className="flex items-center gap-5">
+                <p className="text-sm font-medium  min-w-20">Location :</p>{" "}
+                <p className="text-muted-foreground">
+                  {product.merchant?.address}
+                </p>
+              </div>
+
+              <div className="flex items-center gap-5">
+                <p className="text-sm font-medium  min-w-20">Total View :</p>{" "}
+                <p className="text-muted-foreground">{product.views}</p>
+              </div>
+            </div>
+            {/*   )} */}
+            {/*  {!session && (
               <Link
                 href={"/login"}
                 className="text-2xl text-muted-foreground font-semibold min-h-[300px]"
               >
                 প্রাইস/ডিটেলস দেখতে এখানে ক্লিক করুন
               </Link>
-            )}
-            {session &&
+            )} */}
+            {/* {session &&
               currentUser?.idDeactivationDate &&
               currentUser?.idDeactivationDate < new Date() &&
               !currentUser?.isActive && (
@@ -486,7 +450,7 @@ const ProductDetails = ({
                 >
                   প্রাইস/ডিটেলস দেখতে আইডি অ্যাক্টিভ করুণ
                 </Link>
-              )}
+              )} */}
             {/* Report Button */}
             <Dialog>
               <DialogTrigger className="w-full h-10 flex justify-center items-center  gap-2 border  font-medium bg-background py-1.5 text-base mt-auto hover:bg-red-600 hover:text-white rounded-lg">

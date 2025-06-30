@@ -286,10 +286,10 @@ const EditProfile: React.FC<ProfileFormProps> = ({
   const message = `আমি আমার ব্যবসা জন্য একটি ওয়েবসাইট বানাতে চাচ্ছি। এই বিসয়ে আরও জানতে চাচ্ছি।`;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+    <div className="w-full min-h-screen ">
       {/* Modern Header */}
-      <div className="sticky top-[150px] z-50 dark:bg-gray-900/80 backdrop-blur-lg border-b border-gray-200 dark:border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="sticky top-0 z-50 dark:bg-gray-900/80 backdrop-blur-lg border-b border-gray-200 dark:border-gray-700">
+        <div className="max-w-[1650px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center space-x-4">
               <Button variant="ghost" size="sm" className="lg:hidden">
