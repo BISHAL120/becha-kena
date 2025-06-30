@@ -686,18 +686,7 @@ const ProductDetails = ({
                 {product.merchant?.address}
               </p>
             </div>
-            <div className="flex items-center gap-4 font-semibold">
-              <p>Division: </p>
-              <p className="text-sm text-muted-foreground">
-                {product.merchant?.division}
-              </p>
-            </div>
-            <div className="flex items-center gap-4 font-semibold">
-              <p>District: </p>
-              <p className="text-sm text-muted-foreground">
-                {product.merchant?.district}
-              </p>
-            </div>
+
             <div className="flex items-center gap-4 font-semibold">
               <p>Policy: </p>
               <p className="text-sm text-muted-foreground">

@@ -1,118 +1,101 @@
-"use client";
-
-import * as React from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { ArrowLeft, Lock, Mail } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import Logo from "@/components/ui/logo";
 
-import { Loader2 } from "lucide-react";
-import { toast } from "sonner";
-import axios from "axios";
-
-export default function ResetPasswordPage() {
-  const router = useRouter();
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
-
-  async function onSubmit(event: React.SyntheticEvent) {
-    event.preventDefault();
-    setIsLoading(true);
-
-    const data = {
-      number: (event.target as HTMLFormElement).number.value,
-    };
-
-    axios
-      .post("/api/password/reset", { ...data })
-      .then((res) => {
-        setIsLoading(false);
-        router.push(`/pass-verify?id=${res.data.Data.id}`);
-        toast.success(res.data.message);
-      })
-      .catch((err) => {
-        console.log(err);
-        setIsLoading(false);
-        toast.error(err.response.data);
-      });
-  }
-
+export default function ResetPassword() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50/50 px-4 py-12 sm:px-6 lg:px-8">
-      <div className="w-full max-w-md space-y-8">
-        <div className="text-center space-y-3">
-          <div className="mb-6">
-            <svg
-              className="w-16 h-16 mx-auto text-primary/80"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M12 15V17M6 21H18C19.1046 21 20 20.1046 20 19V13C20 11.8954 19.1046 11 18 11H6C4.89543 11 4 11.8954 4 13V19C4 20.1046 4.89543 21 6 21ZM16 11V7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7V11H16Z"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      {/* Back Home Button */}
+      <div className="absolute top-8 left-8">
+        <Button
+          asChild
+          className="group flex items-center gap-2 transition-all duration-300 hover:bg-green-500 hover:text-white hover:shadow-lg"
+        >
+          <Link href="/login">
+            <ArrowLeft className="w-6 h-6 text-green-500 group-hover:text-white transition-all duration-300" />
+            <span>Back Login</span>
+          </Link>
+        </Button>
+      </div>
+
+      {/* Decorative Elements */}
+      <div className="absolute top-3 md:top-20 right-3 md:right-20 w-32 h-32 bg-green-200 rounded-full opacity-60"></div>
+      <div className="absolute bottom-3 md:bottom-20 left-3 md:left-20 w-20 h-20 bg-green-300 rounded-full opacity-40"></div>
+
+      <div className="w-full max-w-md">
+        {/* Branding */}
+        <div className="text-center mb-8 z-50">
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <Logo />
+            <span className="text-2xl font-bold text-black">
+              BECHA <span className="text-green-500">KENA</span>
+            </span>
           </div>
-          <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-primary to-primary/20 bg-clip-text text-transparent">
-            Reset Password
-          </h1>
-          <p className="text-muted-foreground">
-            We&apos;ll send a verification code to your email address
-          </p>
         </div>
 
-        <div className="mt-8 bg-white px-6 py-8 shadow-xl ring-1 ring-gray-900/5 rounded-xl">
-          <form onSubmit={onSubmit} className="space-y-6">
-            <div>
+        {/* Reset Password Card */}
+        <Card className="shadow-lg border-0 dark:bg-amber-50">
+          <CardHeader className="text-center pb-6">
+            <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+              <Lock className="h-8 w-8 text-green-600" />
+            </div>
+            <CardTitle className="text-2xl font-bold text-gray-900">
+              Reset Password
+            </CardTitle>
+            <CardDescription className="text-gray-600 mt-2">
+              {"We'll send a verification code to your email address"}
+            </CardDescription>
+          </CardHeader>
+
+          <CardContent className="space-y-6">
+            <div className="space-y-2">
               <Label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
+                className="text-sm font-medium text-gray-700"
               >
                 Email address
               </Label>
-              <div className="mt-1">
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <Input
                   id="email"
-                  name="email"
                   type="email"
                   placeholder="you@example.com"
-                  autoComplete="email"
+                  className="pl-10 h-12 border-gray-200 focus:border-green-500 focus:ring-green-500"
                   required
-                  disabled={isLoading}
-                  className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
                 />
               </div>
             </div>
 
             <Button
               type="submit"
-              disabled={isLoading}
-              className="flex w-full justify-center rounded-md bg-primary px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              className="w-full h-12 bg-green-500 hover:bg-green-600 text-white font-medium rounded-lg transition-colors"
             >
-              {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Sending...
-                </>
-              ) : (
-                "Send Verification Code"
-              )}
+              Send Verification Code
             </Button>
-          </form>
-        </div>
 
-        <div className="text-center">
-          <Link
-            href="/login"
-            className="text-sm font-medium text-primary hover:text-primary/80 transition-colors"
-          >
-            ← Back to login
-          </Link>
-        </div>
+            <div className="text-center">
+              <Link
+                href="/login"
+                className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-green-600 transition-colors"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Back to login
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

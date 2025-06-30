@@ -1,11 +1,11 @@
 import Image from "next/image";
 
-import { cn } from "@/lib/utils";
-import { MapPinnedIcon, Star, User } from "lucide-react";
-import Buttons from "./buttons";
-import Link from "next/link";
-import { Category, Product, User as TUser } from "@prisma/client";
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
+import { Category, Product, User as TUser } from "@prisma/client";
+import { Star, User } from "lucide-react";
+import Link from "next/link";
+import Buttons from "./buttons";
 
 /* interface ProductCardProps {
   data: Product;
@@ -102,17 +102,6 @@ export function ProductCard({ data, currentUser }: ProductListProps) {
                   {data.merchant?.name?.slice(0, 10)}
                   {data.merchant?.name &&
                     data.merchant.name.length > 10 &&
-                    "..."}
-                </p>
-              </div>
-              <div className="flex items-center gap-2 py-0.5 md:py-1">
-                <div className="p-1 md:w-8 md:h-8  flex justify-center items-center rounded-full border border-gray-300 dark:bg-gray-600">
-                  <MapPinnedIcon className="min-h-5 min-w-5 max-h-5 max-w-5 dark:stroke-slate-200" />
-                </div>
-                <p className="text-xs md:text-base font-medium text-primary/85">
-                  {data?.merchant?.division?.slice(0, 10)}
-                  {data.merchant?.division &&
-                    data.merchant.division.length > 10 &&
                     "..."}
                 </p>
               </div>

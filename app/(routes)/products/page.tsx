@@ -18,32 +18,12 @@ const Page = async ({
     page: string;
     per_page: string;
     category: string;
-    division: string;
     district: string;
     // sort: string;
   }>;
 }) => {
   const searchParamsValues = await searchParams;
-  const {
-    page = "1",
-    per_page = "10",
-    category = "all",
-    division = "all",
-  } = searchParamsValues;
-
-  /*   const premiumProductCount = await db.product.count({
-    where: {
-      isPromoted: true,
-      promoteType: "PREMIUM",
-      premiumEndDate: { gt: new Date() },
-      published: true,
-      isDeleted: false,
-      categoryId: category !== "all" ? category : undefined,
-      merchant: {
-        division: division !== "all" ? division : undefined,
-      },
-    },
-  }); */
+  const { page = "1", per_page = "10", category = "all" } = searchParamsValues;
 
   const totalStandardProductCount = await db.product.count({
     where: {
@@ -52,9 +32,6 @@ const Page = async ({
       standardPromote: true,
       standardEndDate: { gt: new Date() },
       categoryId: category !== "all" ? category : undefined,
-      merchant: {
-        division: division !== "all" ? division : undefined,
-      },
     },
   });
 
@@ -65,9 +42,6 @@ const Page = async ({
       standardPromote: true,
       standardEndDate: { gt: new Date() },
       categoryId: category !== "all" ? category : undefined,
-      merchant: {
-        division: division !== "all" ? division : undefined,
-      },
     },
     include: {
       merchant: true,
@@ -85,9 +59,7 @@ const Page = async ({
       published: true,
       isDeleted: false,
       categoryId: category !== "all" ? category : undefined,
-      merchant: {
-        division: division !== "all" ? division : undefined,
-      },
+
       standardEndDate: { lt: new Date() },
     },
   });
@@ -101,9 +73,7 @@ const Page = async ({
       published: true,
       isDeleted: false,
       categoryId: category !== "all" ? category : undefined,
-      merchant: {
-        division: division !== "all" ? division : undefined,
-      },
+
       standardEndDate: { lt: new Date() },
     },
     orderBy: {
@@ -131,7 +101,6 @@ const Page = async ({
           allProducts={otherProduct.length}
           page={page}
           per_page={per_page}
-          division={division}
           // district={district}
           category={category}
           // sort={sort}
@@ -152,7 +121,7 @@ const Page = async ({
                 }`}
                 href={`?page=${Number(page) - 1}&per_page=${Number(
                   per_page
-                )}&category=${category}&division=${division}`}
+                )}&category=${category}`}
               />
             </PaginationItem>
             {Number(page) >= 4 ? <PaginationEllipsis /> : ""}
@@ -161,7 +130,7 @@ const Page = async ({
                 <PaginationLink
                   href={`?page=${Number(page) - 1}&per_page=${Number(
                     per_page
-                  )}&category=${category}&division=${division}`}
+                  )}&category=${category}`}
                 >
                   {Number(page) - 1}
                 </PaginationLink>
@@ -172,7 +141,7 @@ const Page = async ({
                 <PaginationLink
                   href={`?page=${Number(page) - 2}&per_page=${Number(
                     per_page
-                  )}&category=${category}&division=${division}`}
+                  )}&category=${category}`}
                 >
                   {Number(page) - 2}
                 </PaginationLink>
@@ -183,7 +152,7 @@ const Page = async ({
                 <PaginationLink
                   href={`?page=${Number(page) - 1}&per_page=${Number(
                     per_page
-                  )}&category=${category}&division=${division}`}
+                  )}&category=${category}`}
                 >
                   {Number(page) - 1}
                 </PaginationLink>
@@ -202,7 +171,7 @@ const Page = async ({
                   <PaginationLink
                     href={`?page=${Number(page) + 1}&per_page=${Number(
                       per_page
-                    )}&category=${category}&division=${division}`}
+                    )}&category=${category}`}
                   >
                     {Number(page) + 1}
                   </PaginationLink>
@@ -225,7 +194,7 @@ const Page = async ({
                 }`}
                 href={`?page=${Number(page) + 1}&per_page=${Number(
                   per_page
-                )}&category=${category}&division=${division}`}
+                )}&category=${category}`}
               />
             </PaginationItem>
           </PaginationContent>

@@ -14,9 +14,14 @@ interface MerchantCardProps {
     number: string | null;
     name: string;
     id: string;
+    whatsAppNumber: string | null;
+    shopName: string | null;
     address: string | null;
+    businessCategory: string | null;
     ratingCount: number;
     ratingTotal: number;
+    productCount: number;
+    createdAt: Date;
     image: string | null;
     bannerImage: string | null;
   };
@@ -75,17 +80,20 @@ export function MerchantCard({ merchant, current }: MerchantCardProps) {
   };
 
   return (
-    <Card className="overflow-hidden">
+    <Card className="overflow-hidden transition-all hover:shadow-lg">
       <CardContent className="p-0">
-        <div className="relative h-48 bg-muted">
+        {/* Banner and Profile Section */}
+        <div className="relative h-56 md:h-64 bg-muted">
           <Image
             src={merchant.bannerImage || "/demoImage/placeholder.svg"}
             alt={merchant.name}
             fill
-            className="object-cover"
+            className="object-cover brightness-95"
           />
-          {/* TODO: Replace the name with user name */}
-          <div className="flex justify-center items-center overflow-hidden bg-background w-16 h-16 rounded-full absolute bottom-2 left-2 ring-2 ring-offset-2 ring-offset-background">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+
+          {/* Profile Image */}
+          <div className="flex justify-center items-center overflow-hidden bg-background w-20 h-20 md:w-24 md:h-24 rounded-full absolute -bottom-10 left-4 ring-4 ring-background shadow-xl">
             <Image
               src={merchant.image || "/demoImage/placeholder.svg"}
               alt={merchant.name}
@@ -93,78 +101,131 @@ export function MerchantCard({ merchant, current }: MerchantCardProps) {
               className="object-cover"
             />
           </div>
+
+          {/* Save Button */}
           {current && (
-            <div>
+            <div className="absolute top-4 right-4">
               {current?.saveMerchant.includes(merchant.id) ? (
                 <Button
-                  onClick={() => {
-                    handleRemoveMerchant();
-                  }}
-                  className="absolute top-4 right-4 text-sm dark:text-white bg-red-600 hover:bg-red-700 dark:hover:bg-red-500 dark:bg-red-600"
+                  onClick={handleRemoveMerchant}
+                  variant="destructive"
+                  className="rounded-full px-4 py-2 text-sm font-medium"
                 >
-                  <BookmarkMinus className="mr-2 h-4 w-4" /> Removed
+                  <BookmarkMinus className="mr-2 h-4 w-4" />
+                  Saved
                 </Button>
               ) : (
                 <Button
-                  onClick={() => {
-                    handleSaveMerchant();
-                  }}
-                  className="absolute top-4 right-4 text-sm bg-blue-500 hover:bg-blue-600 dark:text-white"
+                  onClick={handleSaveMerchant}
+                  className="rounded-full px-4 py-2 text-sm font-medium bg-white/90 text-black hover:bg-white"
                 >
-                  <BookmarkPlus className="mr-2 h-4 w-4" /> Save Seller
+                  <BookmarkPlus className="mr-2 h-4 w-4" />
+                  Save Store
                 </Button>
               )}
             </div>
           )}
         </div>
-        <div className="p-4">
-          <h3 className="text-xl font-semibold">{merchant.name}</h3>
-          <div className="flex items-center gap-1 mt-2">
-            {[...Array(5)].map((_, i) => (
-              <Star
-                key={i}
-                className={`w-4 h-4 ${
-                  i < Math.floor(merchant.ratingTotal / merchant.ratingCount)
-                    ? "fill-yellow-400 stroke-yellow-500 text-primary"
-                    : "fill-muted text-muted-foreground"
-                }`}
-              />
-            ))}
-            <span className="text-sm text-muted-foreground ml-1">
-              {isNaN(merchant.ratingTotal / merchant.ratingCount)
-                ? 0
-                : (merchant.ratingTotal / merchant.ratingCount).toFixed(1)}
-            </span>
+
+        {/* Content Section */}
+        <div className="p-6 pt-12">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-xl font-bold">{merchant.name}</h3>
+              {merchant.shopName && (
+                <p className="text-sm text-muted-foreground mt-1">
+                  {merchant.shopName}
+                </p>
+              )}
+            </div>
+            <div className="flex flex-col items-end">
+              <div className="flex items-center gap-1">
+                <Star className="w-5 h-5 fill-yellow-400 stroke-yellow-500" />
+                <span className="font-medium">
+                  {isNaN(merchant.ratingTotal / merchant.ratingCount)
+                    ? "0.0"
+                    : (merchant.ratingTotal / merchant.ratingCount).toFixed(1)}
+                </span>
+              </div>
+              <span className="text-xs text-muted-foreground">
+                ({merchant.ratingCount} reviews)
+              </span>
+            </div>
           </div>
+
+          {/* Business Details */}
+          {merchant.businessCategory && (
+            <div className="mt-3 inline-flex items-center px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-sm">
+              {merchant.businessCategory}
+            </div>
+          )}
+
+          {/* Store Details */}
           {current ? (
             <div>
               {current.isActive && current.idDeactivationDate >= new Date() ? (
-                <div className="mt-4 space-y-2 text-sm text-muted-foreground">
-                  <p>{merchant.address}</p>
-                  <p>{merchant.number}</p>
+                <div className="mt-4 space-y-2 text-sm">
+                  <div className="flex items-start space-x-2">
+                    <div className="w-full space-y-2">
+                      {merchant.address && (
+                        <p className="text-muted-foreground flex items-center">
+                          <span className="inline-block w-4 h-4 mr-2">📍</span>
+                          {merchant.address}
+                        </p>
+                      )}
+                      {merchant.number && (
+                        <p className="text-muted-foreground flex items-center">
+                          <span className="inline-block w-4 h-4 mr-2">📞</span>
+                          {merchant.number}
+                        </p>
+                      )}
+                      <div className="flex items-center gap-2 mt-3">
+                        {merchant.productCount > 0 && (
+                          <span className="text-sm text-muted-foreground">
+                            {merchant.productCount} products
+                          </span>
+                        )}
+                        <span className="text-muted-foreground">•</span>
+                        <span className="text-sm text-muted-foreground">
+                          Since {new Date(merchant.createdAt).getFullYear()}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               ) : (
-                <div className="text-muted-foreground py-4">
-                  Active Account for store details
+                <div className="mt-4 p-4 bg-muted/50 rounded-lg text-center text-muted-foreground">
+                  Activate your account to view store details
                 </div>
               )}
             </div>
           ) : (
-            <Link href={"/login"}>
-              <div className="text-muted-foreground py-4">
-                Please login to view store details
+            <Link href="/login" className="block mt-4">
+              <div className="p-4 bg-muted/50 rounded-lg text-center text-muted-foreground hover:bg-muted transition-colors">
+                Sign in to view store details
               </div>
             </Link>
           )}
         </div>
       </CardContent>
-      <CardFooter className="p-4 pt-0">
+
+      {/* Footer Actions */}
+      <CardFooter className="p-6 pt-0 gap-4">
         <Link
-          href={`/users/${merchant.number}`}
-          className="w-full text-center bg-slate-600 hover:bg-slate-800 dark:hover:bg-slate-900 dark:bg-slate-400 dark:text-slate-800 dark:hover:text-slate-200 rounded-lg py-2 text-white"
+          href={`/users/profile`}
+          className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg py-2.5 text-center font-medium transition-colors"
         >
           Visit Store
         </Link>
+        {merchant.whatsAppNumber && (
+          <Link
+            href={`https://wa.me/${merchant.whatsAppNumber}`}
+            target="_blank"
+            className="flex-1 bg-green-600 hover:bg-green-700 text-white rounded-lg py-2.5 text-center font-medium transition-colors"
+          >
+            WhatsApp
+          </Link>
+        )}
       </CardFooter>
     </Card>
   );

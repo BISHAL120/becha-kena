@@ -1,8 +1,10 @@
 import { auth } from "@/auth";
 import BottomNavigation from "@/components/shared/bottomNavigation";
+import { DesktopNavigation } from "@/components/shared/desktop";
 import Footer from "@/components/shared/footer";
 import { MobileNavbar } from "@/components/shared/mobileNavbar";
 import Navbar from "@/components/shared/navbar";
+import { Separator } from "@/components/ui/separator";
 import db from "@/prisma/db";
 
 const Layout = async ({ children }: { children: React.ReactNode }) => {
@@ -21,11 +23,16 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div>
-      <div className="min-h-[calc(100vh-120px)] md:mx-auto relative">
+      <div className="min-h-[calc(100vh-120px)] md:mx-auto">
         <Navbar number={session && session.user.email!} user={user} />
+        {/* Bottom Section */}
+        <div className=" hidden md:block sticky z-40 top-0 bg-neutral-50 dark:dark:bg-background">
+          <DesktopNavigation role={user?.role} className="w-full" />
+          <Separator className="py-0.5" />
+        </div>
         <MobileNavbar user={user} />
         <div className="mb-[65px] xl:max-w-[1650px] mx-auto">{children}</div>
-        <BottomNavigation email={session && session.user.email!} />
+        <BottomNavigation />
         <Footer />
       </div>
     </div>

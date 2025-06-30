@@ -38,7 +38,7 @@ const SupportCard = ({ member }: { member: Props }) => {
               </Link>
             </div>
             <div>Address: {member.address}</div>
-            <Link href={`/users/01623939834`}>
+            <Link href={`/users/profile`}>
               <Button className="mt-5">Visit Profile</Button>
             </Link>
           </CardDescription>

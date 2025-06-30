@@ -17,7 +17,6 @@ const MerchantFilters = ({
   total,
   page = "1",
   per_page = "5",
-  division = "all",
   category = "all",
 }: //   district,
 //   sort,
@@ -26,7 +25,6 @@ const MerchantFilters = ({
   total: number;
   page?: string;
   per_page?: string;
-  division?: string;
   category?: string;
   //   district: string;
   //   sort: string;
@@ -34,15 +32,7 @@ const MerchantFilters = ({
   const router = useRouter();
 
   const changeCategory = (key: string, value: string) => {
-    router.push(
-      `?page=${1}&per_page=${per_page}&${key}=${value}&division=${division}`
-    );
-  };
-
-  const changeDivision = (key: string, value: string) => {
-    router.push(
-      `?page=${1}&per_page=${per_page}&category=${category}&${key}=${value}`
-    );
+    router.push(`?page=${1}&per_page=${per_page}&${key}=${value}`);
   };
 
   useEffect(() => {
@@ -52,7 +42,7 @@ const MerchantFilters = ({
           Math.ceil(total / Number(per_page)) === 0
             ? 1
             : Math.ceil(total / Number(per_page))
-        }&per_page=${per_page}&category=${category}&division=${division}`
+        }&per_page=${per_page}&category=${category}`
       );
     }
 
@@ -60,10 +50,10 @@ const MerchantFilters = ({
       router.push(
         `?page=${
           Math.ceil(total / 5) === 0 ? 1 : Math.ceil(total / 5)
-        }&per_page=10&category=${category}&division=${division}&aa=s`
+        }&per_page=10&category=${category}&aa=s`
       );
     }
-  }, [category, division, page, per_page, router, total]);
+  }, [category, page, per_page, router, total]);
 
   return (
     <div className="flex items-center pb-5 w-full">
@@ -86,26 +76,6 @@ const MerchantFilters = ({
                 </SelectItem>
               );
             })}
-          </SelectContent>
-        </Select>
-
-        <Select
-          //   defaultValue="all"
-          onValueChange={(value) => changeDivision("division", value)}
-        >
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Division" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value={"all"}>All</SelectItem>
-            <SelectItem value="Barishal">Barishal</SelectItem>
-            <SelectItem value="Dhaka">Dhaka</SelectItem>
-            <SelectItem value="Rajshahi">Rajshahi</SelectItem>
-            <SelectItem value="Chattogram">Chattogram</SelectItem>
-            <SelectItem value="Khulna">Khulna</SelectItem>
-            <SelectItem value="Rangpur">Rangpur</SelectItem>
-            <SelectItem value="Mymensingh">Mymensingh</SelectItem>
-            <SelectItem value="Sylhet">Sylhet</SelectItem>
           </SelectContent>
         </Select>
       </div>

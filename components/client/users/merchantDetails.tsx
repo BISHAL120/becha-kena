@@ -4,7 +4,6 @@ import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { format } from "date-fns";
 import {
-  Building2,
   Calendar,
   Facebook,
   Globe,
@@ -28,8 +27,6 @@ interface MerchantDetailsProps {
   shopName: string | null;
   address: string | null;
   businessCategory: string | null;
-  division: string | null;
-  district: string | null;
   whatsAppNumber: string | null;
   website: string | null;
   fbAccount: string | null;
@@ -127,12 +124,6 @@ const MerchantDetails = ({
                 <div className="flex items-center gap-2">
                   <MapPin className="w-5 h-5 text-gray-500" />
                   <span>{merchant.address}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Building2 className="w-5 h-5 text-gray-500" />
-                  <span>
-                    {merchant.district}, {merchant.division}
-                  </span>
                 </div>
               </div>
             </Card>

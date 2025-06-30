@@ -27,7 +27,6 @@ const AllUsers = async ({
       isActive: true,
       createdAt: true,
       role: true,
-      division: true,
       productCount: true,
       supportMember: true,
     },

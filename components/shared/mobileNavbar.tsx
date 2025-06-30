@@ -35,7 +35,7 @@ const Menus: { title: string; href: string; sunMenu?: subMenu[] }[] = [
 
   {
     title: "MERCHANTS",
-    href: "/merchants-of-bangladesh",
+    href: "/vendors",
   },
   {
     title: "Products",

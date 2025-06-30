@@ -10,17 +10,18 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import Logo from "@/components/ui/logo";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
+  ArrowDownCircleIcon,
   ArrowLeft,
-  ArrowLeftCircleIcon,
-  ArrowRightCircleIcon,
   Eye,
   EyeOff,
   Loader2,
   Lock,
   User,
 } from "lucide-react";
+import { motion } from "motion/react";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -55,16 +56,7 @@ const LoginPage = () => {
 
   async function onSubmit(values: z.infer<typeof LoginSchema>) {
     try {
-      toast.loading("Processing...", {
-        style: {
-          background: "#FFA500",
-          border: "2px solid #FF8C00",
-          color: "white",
-          fontWeight: "600",
-          fontSize: "16px",
-          padding: "10px 20px",
-        },
-      });
+      toast.loading("Processing...", {});
       setIsLoading(true);
       const result = await signIn("credentials", {
         ...values,
@@ -73,30 +65,12 @@ const LoginPage = () => {
       if (result?.error) {
         toast.dismiss();
         toast.error("Invalid number or password!", {
-          style: {
-            background: "red",
-            border: "2px solid #DC2626",
-            color: "white",
-            fontWeight: "600",
-            fontSize: "16px",
-            padding: "10px 20px",
-          },
           position: "top-center",
-          icon: "❌",
         });
       } else {
         toast.dismiss();
         toast.success("Login successful!", {
-          style: {
-            background: "#22C55E",
-            border: "2px solid #16A34A",
-            color: "white",
-            fontWeight: "600",
-            fontSize: "16px",
-            padding: "10px 20px",
-          },
           position: "top-center",
-          icon: "✅",
         });
         router.push(`/dashboard`);
         router.refresh();
@@ -105,16 +79,7 @@ const LoginPage = () => {
     } catch (error) {
       setIsLoading(false);
       toast.error("An error occurred!", {
-        style: {
-          background: "red",
-          border: "2px solid #DC2626",
-          color: "white",
-          fontWeight: "600",
-          fontSize: "16px",
-          padding: "10px 20px",
-        },
         position: "top-center",
-        icon: "❌",
       });
       console.log("Error :", error);
     }
@@ -135,7 +100,7 @@ const LoginPage = () => {
     {
       id: 1,
       title: "Super Admin",
-      desc: "Login with super admin credentials.",
+      desc: "Login with super admin.",
       image: "/assets/auth/super admin.avif",
       credentials: {
         number: "monerulmd5@gmail.com",
@@ -144,8 +109,8 @@ const LoginPage = () => {
     },
     {
       id: 2,
-      title: "Admin Login Credentials",
-      desc: "Login with admin credentials.",
+      title: "Admin Login",
+      desc: "Login with admin.",
       image: "/assets/auth/admin.jpg",
       credentials: {
         number: "monerulislambishal@gmail.com",
@@ -154,8 +119,8 @@ const LoginPage = () => {
     },
     {
       id: 3,
-      title: "User Login Credentials",
-      desc: "Login with your registered number and password.",
+      title: "User Login",
+      desc: "Login with user",
       image: "/assets/auth/user login.jpg",
       credentials: {
         number: "demouser@gmail.com",
@@ -164,68 +129,10 @@ const LoginPage = () => {
     },
   ];
 
-  const [currentSlide, setCurrentSlide] = React.useState(0);
-  const [isTransitioning, setIsTransitioning] = React.useState(false);
-
-  const nextSlide = () => {
-    if (isTransitioning) return;
-    setIsTransitioning(true);
-    setTimeout(() => {
-      setCurrentSlide((prev) =>
-        prev === CarouselDetails.length - 1 ? 0 : prev + 1
-      );
-      setIsTransitioning(false);
-    }, 150);
-  };
-
-  const prevSlide = () => {
-    if (isTransitioning) return;
-    setIsTransitioning(true);
-    setTimeout(() => {
-      setCurrentSlide((prev) =>
-        prev === 0 ? CarouselDetails.length - 1 : prev - 1
-      );
-      setIsTransitioning(false);
-    }, 150);
-  };
-
-  // Auto-play carousel
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      if (!isTransitioning) {
-        setIsTransitioning(true);
-        setTimeout(() => {
-          setCurrentSlide((prev) =>
-            prev === CarouselDetails.length - 1 ? 0 : prev + 1
-          );
-          setIsTransitioning(false);
-        }, 150);
-      }
-    }, 500000);
-    return () => clearInterval(interval);
-  }, [isTransitioning, CarouselDetails.length]);
-
-  const addCredentialsWithAnimation = () => {
-    setValue("email", CarouselDetails[currentSlide].credentials?.number || "");
-    setValue(
-      "password",
-      CarouselDetails[currentSlide].credentials?.password || ""
-    );
-
-    // Add visual feedback
-    const button = document.querySelector(".credentials-btn");
-    if (button) {
-      button.classList.add("animate-bounce");
-      setTimeout(() => {
-        button.classList.remove("animate-bounce");
-      }, 600);
-    }
-  };
-
   return (
     <div className="flex min-h-screen w-full flex-col md:flex-row bg-gradient-to-br from-slate-50 to-green-50">
       {/* Left side - Illustration and branding */}
-      <div className="hidden md:flex md:w-1/2 bg-white p-8 flex-col justify-between items-center relative overflow-hidden animate-slide-in-left">
+      <div className="hidden md:flex md:w-1/2 bg-white p-8 flex-col justify-center items-center relative overflow-hidden animate-slide-in-left">
         {/* Floating background elements */}
         <div className="absolute top-10 right-10 w-20 h-20 bg-green-400 rounded-full opacity-50 animate-float"></div>
         <div
@@ -233,109 +140,105 @@ const LoginPage = () => {
           style={{ animationDelay: "1s" } as React.CSSProperties}
         ></div>
 
-        <div className="absolute top-8 left-8 animate-fade-in-up ">
+        <div className="absolute top-8 left-8">
           <Button
             asChild
-            variant="outline"
-            className="flex items-center gap-2 hover:scale-105 transition-all duration-300 hover:text-white  hover:shadow-lg cursor-pointer"
+            className="group flex items-center gap-2 transition-all duration-300 hover:bg-green-500 hover:text-white hover:shadow-lg"
           >
             <Link href="/">
-              <ArrowLeft className="w-6 h-6xl:w-8 xl:h-8 text-green-500 transition-all duration-300" />
-              Back Home
+              <ArrowLeft className="w-6 h-6 text-green-500 group-hover:text-white transition-all duration-300" />
+              <span>Back Home</span>
             </Link>
           </Button>
         </div>
+        {/* Credential Section */}
+        <div className="">
+          <div className="relative w-full max-w-lg">
+            <motion.div
+              initial={{ opacity: 0, x: 30, y: 20 }}
+              animate={{ opacity: 1, x: 0, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="flex flex-col items-center space-y-6 lg:mt-8"
+            >
+              {CarouselDetails.map((role, index) => (
+                <motion.button
+                  onClick={() => {
+                    if (role.credentials) {
+                      setValue("email", role.credentials.number);
+                      setValue("password", role.credentials.password);
+                    }
+                  }}
+                  key={role.id}
+                  initial={{ opacity: 0, x: -50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.2 }}
+                  // whileHover={{ scale: 1.05 }}
+                  className="w-full bg-white rounded-xl p-3 lg:px-6 border border-gray-300 shadow-lg hover:shadow-xl hover:shadow-green-400 hover:scale-110 transition-all duration-300 cursor-pointer"
+                >
+                  {/* <div className="flex flex-col items-center "> */}
+                  <div className="w-full flex items-center gap-4">
+                    <div className="relative w-16 h-16 lg:w-20 lg:h-20 rounded-full overflow-hidden">
+                      <Image
+                        src={role.image}
+                        alt={role.title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
 
-        <div className="w-full flex flex-col items-center justify-start mt-14 xl:mt-20 h-full">
-          <div className="w-full">
-            {/* Image Section */}
-            <div className="w-full mx-auto max-w-[600px] flex items-center justify-around animate-scale-in">
-              <button
-                className="cursor-pointer hover:scale-110 transition-all duration-300 hover:text-green-600 p-2 rounded-full hover:bg-green-50"
-                onClick={prevSlide}
-                disabled={isTransitioning}
-              >
-                <ArrowLeftCircleIcon className="w-6 h-6 xl:w-8 xl:h-8 text-green-500 transition-all duration-300" />
-              </button>
+                    <div className="text-start">
+                      <h3 className="text-lg lg:text-xl font-semibold text-gray-800">
+                        {role.title}
+                      </h3>
+                      <p className="text-sm text-gray-500">{role.desc}</p>
+                    </div>
+                  </div>
 
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-green-200/20 to-blue-200/20 rounded-full blur-xl"></div>
-                <Image
-                  src={CarouselDetails[currentSlide].image}
-                  alt={CarouselDetails[currentSlide].title}
-                  width={400}
-                  height={400}
-                  className={`carousel-image w-full md:w-[300px] max-w-[400px] h-full object-cover rounded-2xl shadow-2xl ${
-                    isTransitioning ? "transitioning" : ""
-                  }`}
-                />
-              </div>
+                  {/*  <motion.button
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="flex items-center space-x-2 bg-gray-800/70 hover:bg-green-200 text-shadow-white px-2 py-1 lg:px-5 lg:py-2 rounded-md transition-colors duration-200 cursor-pointer"
+                      onClick={() => {
+                        if (role.credentials) {
+                          setValue("email", role.credentials.number);
+                          setValue("password", role.credentials.password);
+                        }
+                      }}
+                    >
+                      <Plus className="w-4 h-4" />
+                      <span className="text-sm lg:text-base">
+                        Add Credentials
+                      </span>
+                    </motion.button> */}
+                  {/* </div> */}
 
-              <button
-                className="cursor-pointer hover:scale-110 transition-all duration-300 hover:text-green-600 p-2 rounded-full hover:bg-green-50"
-                onClick={nextSlide}
-                disabled={isTransitioning}
-              >
-                <ArrowRightCircleIcon className="w-6 h-6 xl:w-8 xl:h-8 text-green-500 transition-all duration-300" />
-              </button>
-            </div>
+                  <motion.div
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    exit={{ scaleX: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.3 }}
+                    className="h-1 w-full bg-gradient-to-r from-green-300 to-green-500 mt-2 lg:mt-5 rounded-full"
+                  />
+                </motion.button>
+              ))}
+            </motion.div>
 
-            {/* Heading and description */}
-            <div className="flex flex-col items-center text-center mt-6 space-y-4">
-              <div
-                className="space-y-2 animate-fade-in-up"
-                style={{ animationDelay: "0.3s" } as React.CSSProperties}
-              >
-                <h1 className="text-2xl font-bold text-gray-800 transition-all duration-500">
-                  {CarouselDetails[currentSlide].title}
-                </h1>
-                <p className="text-gray-600 max-w-sm transition-all duration-500">
-                  {CarouselDetails[currentSlide].desc}
-                </p>
-              </div>
-              <Button
-                onClick={addCredentialsWithAnimation}
-                className="credentials-btn cursor-pointer bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl animate-pulse-glow"
-                style={{ animationDelay: "0.5s" } as React.CSSProperties}
-              >
-                Add Credentials
-              </Button>
-            </div>
-          </div>
-
-          {/* Carousel dots */}
-          <div
-            className="hidden lg:flex space-x-3 mt-8 animate-fade-in-up"
-            style={{ animationDelay: "0.7s" } as React.CSSProperties}
-          >
-            {CarouselDetails.map((_, i) => (
-              <div
-                key={i}
-                onClick={() => {
-                  if (!isTransitioning) {
-                    setIsTransitioning(true);
-                    setTimeout(() => {
-                      setCurrentSlide(i);
-                      setIsTransitioning(false);
-                    }, 150);
-                  }
-                }}
-                className={`h-3 rounded-full cursor-pointer transition-all duration-300 ease-in-out transform hover:scale-125 ${
-                  i === currentSlide
-                    ? "bg-green-500 w-8 shadow-lg animate-pulse-glow"
-                    : "bg-gray-300 hover:bg-gray-400 w-3"
-                }`}
-              />
-            ))}
+            <motion.div
+              animate={{
+                x: [0, 10, 0],
+                rotate: [0, 5, -5, 0],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                repeatType: "reverse",
+              }}
+              className="absolute -top-12 right-0"
+            >
+              <ArrowDownCircleIcon className="w-10 h-10 text-green-600" />
+            </motion.div>
           </div>
         </div>
-
-        <p
-          className="text-gray-500 text-sm animate-fade-in-up"
-          style={{ animationDelay: "0.9s" } as React.CSSProperties}
-        >
-          Swipe to get more credentials
-        </p>
       </div>
 
       {/* Right side - Login form */}
@@ -347,40 +250,11 @@ const LoginPage = () => {
               : "opacity-0 translate-y-8"
           }`}
         >
-          <div className="text-center space-y-4 animate-fade-in-up">
+          <div className="text-center space-y-4 ">
             <div className="flex justify-center mb-6">
               <div className="flex items-center group">
                 <div className="mr-2 transform group-hover:rotate-12 transition-transform duration-300">
-                  <svg
-                    width="32"
-                    height="32"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="animate-float"
-                  >
-                    <path
-                      d="M12 2L2 7L12 12L22 7L12 2Z"
-                      stroke="#22c55e"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M2 17L12 22L22 17"
-                      stroke="#22c55e"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M2 12L12 17L22 12"
-                      stroke="#22c55e"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
+                  <Logo />
                 </div>
                 <h2 className="text-2xl font-bold text-gray-900">
                   BECHA{" "}
@@ -391,17 +265,71 @@ const LoginPage = () => {
               </div>
             </div>
             <h1
-              className="text-2xl font-bold text-gray-900 animate-fade-in-up"
+              className="text-2xl font-bold text-gray-900 "
               style={{ animationDelay: "0.2s" } as React.CSSProperties}
             >
               Sign in to your account
             </h1>
             <p
-              className="text-gray-500 animate-fade-in-up"
+              className="text-gray-500 "
               style={{ animationDelay: "0.3s" } as React.CSSProperties}
             >
               Enter your credentials below to access your account
             </p>
+          </div>
+          <div>
+            <div className="md:hidden w-full mb-8">
+              <div className="space-y-4">
+                {CarouselDetails.map((role) => (
+                  <motion.button
+                    key={role.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="w-full flex items-center justify-between p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300"
+                    onClick={() => {
+                      if (role.credentials) {
+                        setValue("email", role.credentials.number);
+                        setValue("password", role.credentials.password);
+                      }
+                    }}
+                  >
+                    <div className="flex items-center space-x-3">
+                      <div className="relative w-12 h-12 rounded-full overflow-hidden">
+                        <Image
+                          src={role.image}
+                          alt={role.title}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                      <div className="text-left">
+                        <h3 className="font-medium text-gray-900">
+                          {role.title}
+                        </h3>
+                        <p className="text-sm text-gray-500">{role.desc}</p>
+                      </div>
+                    </div>
+                    <div className="flex-shrink-0 text-green-600">
+                      <svg
+                        className="w-5 h-5"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M12 4V20M20 12L4 12"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                        />
+                      </svg>
+                    </div>
+                  </motion.button>
+                ))}
+              </div>
+            </div>
           </div>
 
           <Form {...form}>
@@ -410,16 +338,13 @@ const LoginPage = () => {
                 control={form.control}
                 name="email"
                 render={({ field }) => (
-                  <FormItem
-                    className="animate-fade-in-up stagger-animation"
-                    style={{ "--index": 1 } as React.CSSProperties}
-                  >
+                  <FormItem className="">
                     <FormLabel className="text-gray-700 font-medium">
                       Email
                     </FormLabel>
                     <FormControl>
                       <div className="relative form-input">
-                        <div className="absolute left-3 top-1/2 -translate-y-1/2 z-50 ">
+                        <div className="absolute left-3 top-1/2 -translate-y-1/2 z-50 text-gray-400 transition-colors duration-300">
                           <User className="h-5 w-5  " />
                         </div>
                         <Input
@@ -444,7 +369,7 @@ const LoginPage = () => {
                 name="password"
                 render={({ field }) => (
                   <FormItem
-                    className="animate-fade-in-up stagger-animation"
+                    className=""
                     style={{ "--index": 2 } as React.CSSProperties}
                   >
                     <FormLabel className="text-gray-700 font-medium">
@@ -465,9 +390,9 @@ const LoginPage = () => {
 
                         <Button
                           type="button"
-                          variant="ghost"
+                          variant={"link"}
                           size="sm"
-                          className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent text-gray-500 hover:text-green-600 transition-colors duration-300"
+                          className="absolute right-0 top-0 h-full px-3 py-2 text-gray-500 "
                           onClick={() => setShowPassword(!showPassword)}
                         >
                           {showPassword ? (
@@ -484,7 +409,7 @@ const LoginPage = () => {
               />
 
               <div
-                className="flex justify-end animate-fade-in-up stagger-animation"
+                className="flex justify-end "
                 style={{ "--index": 3 } as React.CSSProperties}
               >
                 <Link
@@ -496,7 +421,7 @@ const LoginPage = () => {
               </div>
 
               <Button
-                className="w-full py-6 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 font-medium rounded-xl transition-all duration-300 ease-in-out transform hover:scale-[1.02] hover:shadow-xl animate-fade-in-up stagger-animation relative overflow-hidden cursor-pointer text-white "
+                className="w-full py-6 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 font-medium rounded-xl transition-all duration-300 ease-in-out transform hover:scale-[1.02] hover:shadow-xl  relative overflow-hidden cursor-pointer text-white "
                 style={{ "--index": 4 } as React.CSSProperties}
                 disabled={isLoading}
               >
@@ -506,7 +431,7 @@ const LoginPage = () => {
               </Button>
 
               <div
-                className="relative my-6 animate-fade-in-up stagger-animation"
+                className="relative my-6 "
                 style={{ "--index": 5 } as React.CSSProperties}
               >
                 <div className="absolute inset-0 flex items-center">
@@ -521,9 +446,8 @@ const LoginPage = () => {
 
               <Button
                 type="button"
-                variant="outline"
                 onClick={() => signIn("google")}
-                className="w-full py-6 border-gray-200 hover:text-black hover:bg-white hover:shadow-lg font-medium rounded-xl flex items-center justify-center transition-all duration-300 transform hover:scale-[1.02] animate-fade-in-up group"
+                className="w-full py-6 border-gray-200 text-black dark:text-black bg-white hover:text-white hover:shadow-lg font-medium rounded-xl flex items-center justify-center transition-all duration-300 transform hover:scale-[1.02]  group"
               >
                 <svg
                   className="mr-2 h-5 w-5 transition-transform duration-300 group-hover:rotate-12"
@@ -551,10 +475,7 @@ const LoginPage = () => {
                 Sign in with Google
               </Button>
 
-              <p
-                className="text-center text-sm text-gray-500 mt-6 animate-fade-in-up stagger-animation"
-                style={{ "--index": 7 } as React.CSSProperties}
-              >
+              <p className="text-center text-sm text-gray-500 mt-6 ">
                 Don&apos;t have an account?{" "}
                 <Link
                   href="/register"

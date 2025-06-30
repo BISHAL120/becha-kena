@@ -27,7 +27,6 @@ const Merchants = async ({
       number: true,
       createdAt: true,
       role: true,
-      division: true,
       productCount: true,
     },
     orderBy: { createdAt: "desc" },

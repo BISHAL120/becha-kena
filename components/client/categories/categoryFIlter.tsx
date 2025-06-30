@@ -15,53 +15,26 @@ import { useEffect } from "react";
 export default function CategoryFilter({
   page,
   per_page,
-  division = "all",
   total,
   category,
 }: {
   page: string;
   per_page: string;
-  division?: string;
   category: string;
 
   total: number;
 }) {
   const router = useRouter();
 
-  const changeDivision = (value: string) => {
-    router.push(`?page=${1}&per_page=${per_page}&division=${value}`);
-  };
   const changePerPage = (value: string) => {
-    router.push(`?page=${1}&per_page=${value}&division=${division}`);
+    router.push(`?page=${1}&per_page=${value}`);
   };
-
-  /*   useEffect(() => {
-    if (Number(page) > Math.ceil(total / Number(per_page))) {
-      router.push(
-        `?page=${
-          Math.ceil(total / Number(per_page)) === 0
-            ? 1
-            : Math.ceil(total / Number(per_page))
-        }&per_page=${per_page}&division=${division}`
-      );
-    }
-
-    if (Number(page) * Number(per_page) > total) {
-      router.push(
-        `?page=${
-          Math.ceil(total / 5) === 0 ? 1 : Math.ceil(total / 5)
-        }&per_page=10&division=${division}`
-      );
-    }
-  }, [division, page, per_page, router, total]); */
 
   useEffect(() => {
     if (total === 0) {
-      router.push(
-        `?page=${page}&per_page=${per_page}&category=${category}&division=${division}`
-      );
+      router.push(`?page=${page}&per_page=${per_page}&category=${category}`);
     }
-  }, [category, division, page, per_page, router, total]);
+  }, [category, page, per_page, router, total]);
 
   return (
     <div className="flex items-center pb-5">
@@ -74,22 +47,11 @@ export default function CategoryFilter({
           Home
         </Link>
 
-        {/* Division */}
-        {division === "all" ? null : <ChevronRight className="h-6 w-6" />}
-        {division === "all" ? null : (
-          <Link
-            href={`categories/${division}?page=1&per_page=10&division=${division}`}
-            className="text-xl font-semibold border rounded-md px-3 py-1"
-          >
-            {division === "all" ? "All Division" : division}
-          </Link>
-        )}
-
         {/* Category */}
         {category === "all" ? null : <ChevronRight className="h-6 w-6" />}
         {category === "all" ? null : (
           <Link
-            href={`categories/${category}?page=1&per_page=10&division=${division}`}
+            href={`categories/${category}?page=1&per_page=10`}
             className="text-xl font-semibold border rounded-md px-3 py-1"
           >
             {category === "all" ? "All Category" : "Category"}
@@ -110,22 +72,6 @@ export default function CategoryFilter({
             <SelectItem value="20">20 Per Page</SelectItem>
             <SelectItem value="40">40 Per Page</SelectItem>
             <SelectItem value="60">60 Per Page</SelectItem>
-          </SelectContent>
-        </Select>
-        <Select onValueChange={(value) => changeDivision(value)}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Division" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value={"all"}>All</SelectItem>
-            <SelectItem value="Barishal">Barishal</SelectItem>
-            <SelectItem value="Dhaka">Dhaka</SelectItem>
-            <SelectItem value="Rajshahi">Rajshahi</SelectItem>
-            <SelectItem value="Chattogram">Chattogram</SelectItem>
-            <SelectItem value="Khulna">Khulna</SelectItem>
-            <SelectItem value="Rangpur">Rangpur</SelectItem>
-            <SelectItem value="Mymensingh">Mymensingh</SelectItem>
-            <SelectItem value="Sylhet">Sylhet</SelectItem>
           </SelectContent>
         </Select>
       </div>

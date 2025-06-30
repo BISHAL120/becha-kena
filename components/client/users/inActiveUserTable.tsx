@@ -53,7 +53,6 @@ interface InActiveProps {
   id: string;
   name: string;
   isActive: boolean;
-  division: string | null;
   productCount: number;
   role: string[];
   supportMember: boolean;
@@ -244,15 +243,6 @@ export function InActiveUserTable({
               </span>
             ))}
           </div>
-        </div>
-      ),
-    },
-    {
-      accessorKey: "division",
-      header: "Division",
-      cell: ({ row }) => (
-        <div className="flex items-center gap-2">
-          <div className="font-medium">{row.original.division}</div>
         </div>
       ),
     },

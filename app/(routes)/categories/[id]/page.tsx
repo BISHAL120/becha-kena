@@ -9,13 +9,12 @@ const Products = async ({
   searchParams: Promise<{
     page: string;
     per_page: string;
-    division: string;
   }>;
   params: Promise<{
     id: string;
   }>;
 }) => {
-  const { page = "1", per_page = "5", division = "all" } = await searchParams;
+  const { page = "1", per_page = "5" } = await searchParams;
   const { id } = await params;
 
   const standardProductCount = await db.product.count({
@@ -27,9 +26,6 @@ const Products = async ({
       categoryId: {
         equals: id,
       },
-      merchant: {
-        division: division !== "all" ? division : undefined,
-      },
     },
   });
   const standardProduct = await db.product.findMany({
@@ -40,9 +36,6 @@ const Products = async ({
       standardEndDate: { gt: new Date() },
       categoryId: {
         equals: id,
-      },
-      merchant: {
-        division: division !== "all" ? division : undefined,
       },
     },
     orderBy: {
@@ -63,9 +56,7 @@ const Products = async ({
       categoryId: {
         equals: id,
       },
-      merchant: {
-        division: division !== "all" ? division : undefined,
-      },
+
       standardEndDate: { lt: new Date() },
     },
   });
@@ -80,9 +71,7 @@ const Products = async ({
       categoryId: {
         equals: id,
       },
-      merchant: {
-        division: division !== "all" ? division : undefined,
-      },
+
       standardEndDate: { lt: new Date() },
     },
     orderBy: {
@@ -106,7 +95,6 @@ const Products = async ({
           page={page}
           per_page={per_page}
           total={total}
-          division={division}
         />
         <ProductList allProducts={[...standardProduct, ...otherProducts]} />
       </div>

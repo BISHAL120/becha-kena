@@ -30,7 +30,6 @@ const InActiveUSers = async ({
       createdAt: true,
       role: true,
       isActive: true,
-      division: true,
       productCount: true,
       supportMember: true,
     },

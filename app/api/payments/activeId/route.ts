@@ -50,7 +50,6 @@ export async function POST(req: NextRequest) {
     formData.append("customer_address", user?.address || "");
     formData.append("customer_email", `${body.number}@gmail.com`);
     formData.append("customer_phone", body.number);
-    formData.append("customer_city", user?.division || "Dhaka");
     /* TODO: For Production remove this */
     formData.append("client_ip", `${ip}`);
 

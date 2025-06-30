@@ -13,7 +13,6 @@ export const loginSchema = object({
 export const registerSchema = object({
   fullName: string().min(2, { message: "Please Enter Your Full Name" }),
   fullAddress: string().min(2, { message: "Please Enter Your Full Address" }),
-  division: string().min(2, { message: "Please select Your Division" }),
   businessCategory: string().min(2, {
     message: "Please select Interested Business",
   }),

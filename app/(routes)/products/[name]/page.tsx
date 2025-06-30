@@ -3,7 +3,6 @@ import ProductDetails from "@/components/client/products/singleProduct";
 import db from "@/prisma/db";
 
 const ProductPage = async ({
-  params,
   searchParams,
 }: {
   searchParams: Promise<{
@@ -14,8 +13,6 @@ const ProductPage = async ({
   }>;
 }) => {
   const { id } = await searchParams;
-  const { name } = await params;
-  console.log(name);
 
   const session = await auth();
   const user = session?.user;

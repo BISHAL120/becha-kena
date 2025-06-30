@@ -31,9 +31,6 @@ const NewProduct = async ({
       where: {
         id: id,
       },
-      /* include: {
-        merchant: true,
-      }, */
     });
   }
 

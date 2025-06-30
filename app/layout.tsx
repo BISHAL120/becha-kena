@@ -26,7 +26,7 @@ export default function RootLayout({
           attribute="class"
           defaultTheme="light"
           enableSystem
-          disableTransitionOnChange
+          // disableTransitionOnChange
         >
           <div className="">{children}</div>
           <Toaster expand={true} richColors={true} position="top-center" />

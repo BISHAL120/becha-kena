@@ -137,7 +137,7 @@ export async function CategoryGrid() {
         {demoData.map((category, idx) => (
           <Link
             key={idx}
-            href={`/categories/${category.id}?page=1&per_page=10&division=all`}
+            href={`/categories/${category.id}?page=1&per_page=10`}
             className="group relative overflow-hidden bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border-none"
           >
             <div className="relative border-none w-full aspect-square bg-gradient-to-br from-gray-50 to-gray-100">

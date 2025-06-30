@@ -11,16 +11,10 @@ const Merchants = async ({
     per_page: string;
     search: string;
     category: string;
-    division: string;
   }>;
 }) => {
   const searchParamsValues = await searchParams;
-  const {
-    page = "1",
-    per_page = "10",
-    category = "all",
-    division = "all",
-  } = searchParamsValues;
+  const { page = "1", per_page = "10", category = "all" } = searchParamsValues;
 
   const categories = await db.category.findMany();
 
@@ -32,7 +26,6 @@ const Merchants = async ({
         has: "MERCHANT",
       },
       businessCategory: category !== "all" ? categoryName : undefined,
-      division: division !== "all" ? division : undefined,
     },
     select: {
       number: true,
@@ -91,7 +84,6 @@ const Merchants = async ({
             total={count}
             allCategories={categories}
             category={category}
-            division={division}
           />
         </div>
 

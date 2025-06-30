@@ -1,7 +1,8 @@
 import Link from "next/link";
 import Logo from "../ui/logo";
-import { DesktopNavigation } from "./desktop";
+import LogoText from "./logo";
 import SearchBar from "./search";
+import { ToggleButton } from "./toggleButton";
 import UserButton from "./userButton";
 
 interface NavbarProps {
@@ -16,23 +17,22 @@ interface NavbarProps {
 const Navbar = async ({ number, user }: NavbarProps) => {
   // console.log(user);
   return (
-    <div className="w-full sticky z-50 top-0 dark:bg-background bg-primary text-white">
-      <div className="hidden xl:max-w-[1550px] mx-auto md:block  w-full px-3 py-6 space-y-2">
+    <div className="w-full hidden md:block bg-neutral-50 dark:bg-background pb-1">
+      {/* Top Section */}
+      <div className="xl:max-w-[1650px] mx-auto  w-full px-3 py-6 pb-2 space-y-2">
         <div className="flex justify-between items-center ">
           <Link href="/" className="flex justify-center items-center gap-1">
             <Logo />
-            <h2 className="text-2xl font-bold text-slate-50">
-              BECHA{" "}
-              <span className="text-green-500 bg-gradient-to-r from-green-500 to-green-600 bg-clip-text">
-                KENA
-              </span>
-            </h2>
+            <LogoText />
           </Link>
           {/* Search Bar */}
           <SearchBar />
           <div className="flex justify-center items-center gap-4">
             {number ? (
-              <UserButton user={user} />
+              <>
+                <ToggleButton />
+                <UserButton user={user} />
+              </>
             ) : (
               <Link href="/login">
                 <div className="font-mono text-base font-semibold cursor-pointer flex justify-center items-center gap-2">
@@ -42,9 +42,6 @@ const Navbar = async ({ number, user }: NavbarProps) => {
             )}
           </div>
         </div>
-      </div>
-      <div className="bg-[#72a3ce] dark:bg-slate-800">
-        <DesktopNavigation role={user?.role} className="w-full" />
       </div>
     </div>
   );

@@ -225,6 +225,10 @@ const ProductForm: React.FC<ProductFormProps> = ({
             console.error(error);
           });
       } else {
+        if (!images) {
+          return toast.error("Please Add Images!");
+        }
+
         const uploadedUrls: string[] = [];
 
         const uploadPromises = Array.from(images).map((item) => {

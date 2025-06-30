@@ -23,8 +23,8 @@ const Menus: { title: string; href: string; sunMenu?: subMenu[] }[] = [
   },
 
   {
-    title: "MERCHANTS",
-    href: "/merchants-of-bangladesh",
+    title: "Vendors",
+    href: "/vendors",
   },
   {
     title: "Products",
@@ -69,7 +69,7 @@ export async function DesktopNavigation({
     >
       <NavigationMenuList className="justify-start">
         <NavigationMenuItem className=" ">
-          <NavigationMenuTrigger className="bg-transparent hover:cursor-pointer ">
+          <NavigationMenuTrigger className=" hover:cursor-pointer ">
             Getting started
           </NavigationMenuTrigger>
           <NavigationMenuContent>
@@ -79,7 +79,7 @@ export async function DesktopNavigation({
                   <Link
                     prefetch={true}
                     title={component.name}
-                    href={`/categories/${component.id}?page=1&per_page=10&division=all`}
+                    href={`/categories/${component.id}?page=1&per_page=10`}
                     className={`flex items-center justify-between rounded-md border dark:border-muted/50 px-4 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground`}
                   >
                     {component.name}

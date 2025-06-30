@@ -44,7 +44,6 @@ interface MerchantsProps {
   number: string | null;
   id: string;
   name: string;
-  division: string | null;
   productCount: number;
   role: string[];
   image: string | null;
@@ -178,15 +177,6 @@ export function MerchantTable({
               </span>
             ))}
           </div>
-        </div>
-      ),
-    },
-    {
-      accessorKey: "division",
-      header: "Division",
-      cell: ({ row }) => (
-        <div className="flex items-center gap-2">
-          <div className="font-medium">{row.original.division}</div>
         </div>
       ),
     },

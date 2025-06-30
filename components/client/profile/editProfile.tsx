@@ -23,7 +23,6 @@ import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { storage } from "@/lib/firebase";
-import { Districts } from "@/lib/placeList";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { User } from "@prisma/client";
 import axios from "axios";
@@ -73,8 +72,6 @@ const formSchema = object({
   whatsAppNumber: z.string().optional(),
   address: z.string().min(2),
   businessCategory: z.string().min(2).optional(),
-  division: z.string().min(1).optional(),
-  district: z.string().optional(),
   fbAccount: z.string().optional(),
   fbBnsPage: z.string().optional(),
   youtube: z.string().optional(),
@@ -123,11 +120,7 @@ const EditProfile: React.FC<ProfileFormProps> = ({
       businessCategory: initialData?.businessCategory
         ? initialData.businessCategory
         : "",
-      division: initialData?.division ? initialData.division : "",
-      district: initialData?.district ? initialData.district : "",
-      deliveryPartner: initialData?.deliveryPartner
-        ? initialData.deliveryPartner
-        : [],
+
       interested: tempInterest,
       policy: initialData?.policy ? initialData.policy : "",
       fbAccount: initialData?.fbAccount ? initialData.fbAccount : "",
@@ -136,17 +129,12 @@ const EditProfile: React.FC<ProfileFormProps> = ({
       tikTok: initialData?.tikTok ? initialData.tikTok : "",
       instagram: initialData?.instagram ? initialData.instagram : "",
       website: initialData?.website ? initialData.website : "",
-      companySize: initialData?.companySize ? initialData.companySize : "",
-      groupLink: initialData?.groupLink ? initialData.groupLink : "",
     },
   });
 
   const fieldCheck = () => {
-    const division = form.getValues("division");
     const businessCategory = form.getValues("businessCategory");
-    if (!division) {
-      return toast.error("Please Select your Division!");
-    }
+
     if (!businessCategory) {
       return toast.error("Please Select a Business Category!");
     }
@@ -222,7 +210,7 @@ const EditProfile: React.FC<ProfileFormProps> = ({
                 ...initialData,
                 bannerImage: url,
               });
-              router.push(`/users/${initialData?.number}`);
+              router.push(`/users/profile`);
               router.refresh();
               toast.dismiss();
               toast.success("Banner uploaded successfully.");
@@ -279,7 +267,7 @@ const EditProfile: React.FC<ProfileFormProps> = ({
                 ...initialData,
                 image: url,
               });
-              router.push(`/users/${initialData?.number}`);
+              router.push(`/users/profile`);
               router.refresh();
               toast.dismiss();
               toast.success("Profile uploaded successfully.");
@@ -678,82 +666,7 @@ const EditProfile: React.FC<ProfileFormProps> = ({
                   Your business location details
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-6">
-                <FormField
-                  control={form.control}
-                  name="division"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Division</FormLabel>
-                      <FormControl>
-                        <RadioGroup
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                          className="grid grid-cols-2 md:grid-cols-4 gap-4"
-                        >
-                          {[
-                            "Barishal",
-                            "Chattogram",
-                            "Dhaka",
-                            "Rajshahi",
-                            "Khulna",
-                            "Rangpur",
-                            "Mymensingh",
-                            "Sylhet",
-                          ].map((division) => (
-                            <FormItem
-                              key={division}
-                              className="flex items-center space-x-2 space-y-0 rounded-lg border p-3 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-                            >
-                              <FormControl>
-                                <RadioGroupItem value={division} />
-                              </FormControl>
-                              <FormLabel className="font-normal cursor-pointer flex-1">
-                                {division}
-                              </FormLabel>
-                            </FormItem>
-                          ))}
-                        </RadioGroup>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="district"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>District</FormLabel>
-                      <FormControl>
-                        <ScrollArea className="h-48 border rounded-lg p-4">
-                          <RadioGroup
-                            onValueChange={field.onChange}
-                            defaultValue={field.value}
-                            className="grid grid-cols-2 md:grid-cols-3 gap-3"
-                          >
-                            {Districts.map((district, idx) => (
-                              <FormItem
-                                key={idx}
-                                className="flex items-center space-x-2 space-y-0"
-                              >
-                                <FormControl>
-                                  <RadioGroupItem value={district} />
-                                </FormControl>
-                                <FormLabel className="font-normal text-sm cursor-pointer">
-                                  {district}
-                                </FormLabel>
-                              </FormItem>
-                            ))}
-                          </RadioGroup>
-                        </ScrollArea>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </CardContent>
+              <CardContent className="space-y-6"></CardContent>
             </Card>
 
             {/* Business Details */}

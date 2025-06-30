@@ -4,19 +4,16 @@ import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { format } from "date-fns";
 import {
-  Building2,
   Calendar,
   Facebook,
   Globe,
   Instagram,
-  Link as LinkIcon,
   MapPin,
   Phone,
   ShoppingBag,
   Star,
   Store,
   BookIcon as TiktokIcon,
-  Users,
   Youtube,
 } from "lucide-react";
 import Image from "next/image";
@@ -28,19 +25,16 @@ interface MerchantDetailsProps {
   shopName: string | null;
   address: string | null;
   businessCategory: string | null;
-  division: string | null;
-  district: string | null;
+
   whatsAppNumber: string | null;
   website: string | null;
   fbAccount: string | null;
   fbBnsPage: string | null;
   image: string | null;
   instagram: string | null;
-  companySize: string | null;
   bannerImage: string | null;
   youtube: string | null;
   tikTok: string | null;
-  groupLink: string | null;
   isActive: boolean;
   role: string[];
   ratingCount: number;
@@ -120,19 +114,10 @@ const MerchantDetails = ({
                   <Store className="w-5 h-5 text-gray-500" />
                   <span>Category: {merchant.businessCategory}</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Users className="w-5 h-5 text-gray-500" />
-                  <span>Company Size: {merchant.companySize}</span>
-                </div>
+
                 <div className="flex items-center gap-2">
                   <MapPin className="w-5 h-5 text-gray-500" />
                   <span>{merchant.address}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Building2 className="w-5 h-5 text-gray-500" />
-                  <span>
-                    {merchant.district}, {merchant.division}
-                  </span>
                 </div>
               </div>
             </Card>
@@ -200,14 +185,6 @@ const MerchantDetails = ({
                 >
                   <TiktokIcon className="w-5 h-5" />
                   <span>TikTok</span>
-                </Link>
-                <Link
-                  target={`${merchant.groupLink ? "_blank" : ""}`}
-                  href={merchant.groupLink || "#"}
-                  className="flex items-center gap-2 text-blue-600"
-                >
-                  <LinkIcon className="w-5 h-5" />
-                  <span>Group Link</span>
                 </Link>
               </div>
             </Card>

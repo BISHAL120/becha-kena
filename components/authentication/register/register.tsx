@@ -22,6 +22,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { RegisterSchema } from "../../../lib/zod/register";
 import axios from "axios";
+import Logo from "@/components/ui/logo";
 
 const LoginPage = () => {
   const router = useRouter();
@@ -87,15 +88,14 @@ const LoginPage = () => {
           style={{ animationDelay: "1s" } as React.CSSProperties}
         ></div>
 
-        <div className="absolute top-8 left-8 animate-fade-in-up ">
+        <div className="absolute top-8 left-8">
           <Button
             asChild
-            variant="outline"
-            className="flex items-center gap-2 hover:scale-105 transition-all duration-300 hover:text-white hover:shadow-lg cursor-pointer"
+            className="group flex items-center gap-2 transition-all duration-300 hover:bg-green-500 hover:text-white hover:shadow-lg"
           >
-            <Link href="/">
-              <ArrowLeft className="w-6 h-6 xl:w-8 xl:h-8 text-green-500 transition-all duration-300" />
-              Back Home
+            <Link href="/login">
+              <ArrowLeft className="w-6 h-6 text-green-500 group-hover:text-white transition-all duration-300" />
+              <span>Back Login</span>
             </Link>
           </Button>
         </div>
@@ -117,13 +117,6 @@ const LoginPage = () => {
             </div>
           </div>
         </div>
-
-        <p
-          className="text-gray-500 text-sm animate-fade-in-up"
-          style={{ animationDelay: "0.9s" } as React.CSSProperties}
-        >
-          Swipe to get more credentials
-        </p>
       </div>
 
       {/* Right side - Login form */}
@@ -135,40 +128,11 @@ const LoginPage = () => {
               : "opacity-0 translate-y-8"
           }`}
         >
-          <div className="text-center space-y-4 animate-fade-in-up">
+          <div className="text-center space-y-4 ">
             <div className="flex justify-center mb-6">
               <div className="flex items-center group">
                 <div className="mr-2 transform group-hover:rotate-12 transition-transform duration-300">
-                  <svg
-                    width="32"
-                    height="32"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="animate-float"
-                  >
-                    <path
-                      d="M12 2L2 7L12 12L22 7L12 2Z"
-                      stroke="#22c55e"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M2 17L12 22L22 17"
-                      stroke="#22c55e"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M2 12L12 17L22 12"
-                      stroke="#22c55e"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
+                  <Logo />
                 </div>
                 <h2 className="text-2xl font-bold text-gray-900">
                   BECHA{" "}
@@ -179,13 +143,13 @@ const LoginPage = () => {
               </div>
             </div>
             <h1
-              className="text-2xl font-bold text-gray-900 animate-fade-in-up"
+              className="text-2xl font-bold text-gray-900 "
               style={{ animationDelay: "0.2s" } as React.CSSProperties}
             >
               Create Your Account
             </h1>
             <p
-              className="text-gray-500 animate-fade-in-up"
+              className="text-gray-500 "
               style={{ animationDelay: "0.3s" } as React.CSSProperties}
             >
               Enter your credentials below to create your account
@@ -198,10 +162,7 @@ const LoginPage = () => {
                 control={form.control}
                 name="fullName"
                 render={({ field }) => (
-                  <FormItem
-                    className="animate-fade-in-up stagger-animation"
-                    style={{ "--index": 1 } as React.CSSProperties}
-                  >
+                  <FormItem className="">
                     <FormLabel className="text-gray-700 font-medium">
                       Full Name
                     </FormLabel>
@@ -217,7 +178,7 @@ const LoginPage = () => {
                           autoCapitalize="none"
                           autoComplete="name"
                           disabled={isLoading}
-                          className="pl-10 py-6 bg-white border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 backdrop-blur-sm"
+                          className="pl-10 py-6 bg-white text-black border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 backdrop-blur-sm"
                         />
                       </div>
                     </FormControl>
@@ -229,10 +190,7 @@ const LoginPage = () => {
                 control={form.control}
                 name="email"
                 render={({ field }) => (
-                  <FormItem
-                    className="animate-fade-in-up stagger-animation"
-                    style={{ "--index": 1 } as React.CSSProperties}
-                  >
+                  <FormItem className="">
                     <FormLabel className="text-gray-700 font-medium">
                       Email
                     </FormLabel>
@@ -249,7 +207,7 @@ const LoginPage = () => {
                           autoComplete="email"
                           autoCorrect="off"
                           disabled={isLoading}
-                          className="pl-10 py-6 bg-white border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 backdrop-blur-sm"
+                          className="pl-10 py-6 bg-white text-black border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 backdrop-blur-sm"
                         />
                       </div>
                     </FormControl>
@@ -263,7 +221,7 @@ const LoginPage = () => {
                 name="password"
                 render={({ field }) => (
                   <FormItem
-                    className="animate-fade-in-up stagger-animation"
+                    className=""
                     style={{ "--index": 2 } as React.CSSProperties}
                   >
                     <FormLabel className="text-gray-700 font-medium">
@@ -279,13 +237,13 @@ const LoginPage = () => {
                           type={showPassword ? "text" : "password"}
                           disabled={isLoading}
                           placeholder="Enter your password"
-                          className="pl-10 py-6 bg-white border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 backdrop-blur-sm"
+                          className="pl-10 py-6  text-black bg-white border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 backdrop-blur-sm"
                         />
 
                         <Button
                           type="button"
-                          variant="ghost"
                           size="sm"
+                          variant={"link"}
                           className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent text-gray-500 hover:text-green-600 transition-colors duration-300"
                           onClick={() => setShowPassword(!showPassword)}
                         >
@@ -302,7 +260,7 @@ const LoginPage = () => {
                 )}
               />
               <Button
-                className="w-full py-6 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-medium rounded-xl transition-all duration-300 ease-in-out transform hover:scale-[1.02] hover:shadow-xl animate-fade-in-up stagger-animation relative overflow-hidden cursor-pointer"
+                className="w-full py-6 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-medium rounded-xl transition-all duration-300 ease-in-out transform hover:scale-[1.02] hover:shadow-xl  relative overflow-hidden cursor-pointer"
                 style={{ "--index": 4 } as React.CSSProperties}
                 disabled={isLoading}
               >
@@ -312,7 +270,7 @@ const LoginPage = () => {
               </Button>
 
               <div
-                className="relative my-6 animate-fade-in-up stagger-animation"
+                className="relative my-6 "
                 style={{ "--index": 5 } as React.CSSProperties}
               >
                 <div className="absolute inset-0 flex items-center">
@@ -327,9 +285,8 @@ const LoginPage = () => {
 
               <Button
                 type="button"
-                variant="outline"
-                className="w-full py-6 border-gray-200 hover:bg-white hover:shadow-lg font-medium rounded-xl flex items-center justify-center transition-all duration-300 transform hover:scale-[1.02] animate-fade-in-up stagger-animation group"
-                style={{ "--index": 6 } as React.CSSProperties}
+                onClick={() => signIn("google")}
+                className="w-full py-6 border-gray-200 hover:text-black hover:bg-white hover:shadow-lg font-medium rounded-xl flex items-center justify-center transition-all duration-300 transform hover:scale-[1.02]  group"
               >
                 <svg
                   className="mr-2 h-5 w-5 transition-transform duration-300 group-hover:rotate-12"
@@ -358,7 +315,7 @@ const LoginPage = () => {
               </Button>
 
               <p
-                className="text-center text-sm text-gray-500 mt-6 animate-fade-in-up stagger-animation"
+                className="text-center text-sm text-gray-500 mt-6 "
                 style={{ "--index": 7 } as React.CSSProperties}
               >
                 Already Have an Account?

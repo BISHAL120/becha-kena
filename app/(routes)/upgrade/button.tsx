@@ -15,7 +15,6 @@ const PaymentButton = ({ id }: { id: string }) => {
       .then((res) => {
         toast.dismiss();
         toast.success("Make Payment to confirm order");
-        console.log(res.data);
         router.push(res.data.url);
       })
       .catch((err) => {

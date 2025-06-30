@@ -27,20 +27,17 @@ model User {
   id                       String           @id @default(auto()) @map("_id") @db.ObjectId
   name                     String
   email                    String           @unique
+  number                   String?
+  whatsAppNumber           String?
   shopName                 String?
   address                  String?
   idDeactivationDate       DateTime         @default(now())
   merchantDeactivationDate DateTime         @default(now())
   businessCategory         String?
-  division                 String?
-  district                 String?
-  deliveryPartner          String[]
   interested               String[]
   saveMerchant             String[]
   saveProducts             String[]
   productLimit             Float            @default(2)
-  number                   String?
-  whatsAppNumber           String?
   ratingCount              Float            @default(0)
   ratingTotal              Float            @default(0)
   productCount             Float            @default(0)
@@ -51,9 +48,6 @@ model User {
   tikTok                   String?
   instagram                String?
   website                  String?
-  dateOfBirth              String?
-  companySize              String?
-  groupLink                String?
   password                 String?
   emailVerified            DateTime?
   role                     String[]         @default(["USER"])

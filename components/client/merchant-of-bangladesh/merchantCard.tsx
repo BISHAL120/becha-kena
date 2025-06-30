@@ -160,7 +160,7 @@ export function MerchantCard({ merchant, current }: MerchantCardProps) {
       </CardContent>
       <CardFooter className="p-4 pt-0">
         <Link
-          href={`/users/${merchant.number}`}
+          href={`/users/profile`}
           className="w-full text-center bg-slate-600 hover:bg-slate-800 dark:hover:bg-slate-900 dark:bg-slate-400 dark:text-slate-800 dark:hover:text-slate-200 rounded-lg py-2 text-white"
         >
           Visit Store

@@ -34,7 +34,6 @@ const AllMerchants = async ({
       number: true,
       createdAt: true,
       role: true,
-      division: true,
       productCount: true,
       supportMember: true,
     },

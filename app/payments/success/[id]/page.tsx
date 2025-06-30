@@ -1,7 +1,7 @@
 "use client";
 
 import axios from "axios";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import { useParams, useSearchParams } from "next/navigation";

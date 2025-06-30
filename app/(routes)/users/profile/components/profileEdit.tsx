@@ -104,7 +104,7 @@ const ProfileEdit: React.FC<ProfileFormProps> = ({ initialData }) => {
       toast.success("Profile updated");
       setLoading(false);
       router.refresh();
-      router.push(`/users/${initialData?.number}`);
+      router.push(`/users/profile`);
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -156,7 +156,7 @@ const ProfileEdit: React.FC<ProfileFormProps> = ({ initialData }) => {
                 ...initialData,
                 bannerImage: url,
               });
-              router.push(`/users/${initialData?.number}`);
+              router.push(`/users/profile`);
               router.refresh();
               toast.dismiss();
               toast.success("Banner uploaded successfully.");
@@ -220,7 +220,7 @@ const ProfileEdit: React.FC<ProfileFormProps> = ({ initialData }) => {
                 ...initialData,
                 image: url,
               });
-              router.push(`/users/${initialData?.number}`);
+              router.push(`/users/profile`);
               router.refresh();
               toast.dismiss();
               toast.success("Profile uploaded successfully.");

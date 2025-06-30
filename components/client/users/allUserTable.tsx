@@ -54,7 +54,6 @@ interface UserProps {
   number: string | null;
   id: string;
   name: string;
-  division: string | null;
   isActive: boolean;
   productCount: number;
   role: string[];
@@ -277,15 +276,6 @@ export function AllUserTable({
               </span>
             ))}
           </div>
-        </div>
-      ),
-    },
-    {
-      accessorKey: "division",
-      header: "Division",
-      cell: ({ row }) => (
-        <div className="flex items-center gap-2">
-          <div className="font-medium">{row.original.division}</div>
         </div>
       ),
     },
