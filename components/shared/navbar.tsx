@@ -17,9 +17,9 @@ interface NavbarProps {
 const Navbar = async ({ number, user }: NavbarProps) => {
   // console.log(user);
   return (
-    <div className="w-full hidden md:block bg-neutral-50 dark:bg-background pb-1">
+    <div className="w-full hidden md:block bg-neutral-50 dark:bg-background">
       {/* Top Section */}
-      <div className="xl:max-w-[1650px] mx-auto  w-full px-3 py-6 pb-2 space-y-2">
+      <div className="xl:max-w-[1650px] mx-auto  w-full px-3 pt-4 pb-2">
         <div className="flex justify-between items-center ">
           <Link href="/" className="flex justify-center items-center gap-1">
             <Logo />
@@ -34,11 +34,14 @@ const Navbar = async ({ number, user }: NavbarProps) => {
                 <UserButton user={user} />
               </>
             ) : (
-              <Link href="/login">
-                <div className="font-mono text-base font-semibold cursor-pointer flex justify-center items-center gap-2">
-                  LOGIN
-                </div>
-              </Link>
+              <>
+                <ToggleButton />
+                <Link href="/login">
+                  <div className="font-mono text-base font-semibold cursor-pointer flex justify-center items-center gap-2">
+                    LOGIN
+                  </div>
+                </Link>
+              </>
             )}
           </div>
         </div>

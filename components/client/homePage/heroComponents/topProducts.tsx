@@ -1,6 +1,6 @@
-import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import SectionTitle from "../sectionTittle";
 
 // Demo data for featured products
 const featuredProducts = [
@@ -47,16 +47,8 @@ const TopProducts = () => {
     <div className="">
       {/* Best Picks Section */}
       <div className="mt-12">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-semibold text-gray-800 dark:text-slate-100">
-            Top Products
-          </h2>
-          <Link
-            href="/products"
-            className="text-sm text-gray-500 dark:text-slate-100 hover:text-green-600 flex items-center"
-          >
-            Shop More <ChevronRight className="h-4 w-4 ml-1" />
-          </Link>
+        <div>
+          <SectionTitle title="Top Products" href="/products" />
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">

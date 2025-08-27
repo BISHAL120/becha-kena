@@ -28,7 +28,7 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
         {/* Bottom Section */}
         <div className=" hidden md:block sticky z-40 top-0 bg-neutral-50 dark:dark:bg-background">
           <DesktopNavigation role={user?.role} className="w-full" />
-          <Separator className="py-0.5" />
+          <Separator color="neutral" />
         </div>
         <MobileNavbar user={user} />
         <div className="mb-[65px] xl:max-w-[1650px] mx-auto">{children}</div>

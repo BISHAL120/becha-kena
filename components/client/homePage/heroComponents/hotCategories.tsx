@@ -1,7 +1,6 @@
-import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import SectionTitle from "../sectionTittle";
 
 const demoCategories = [
   { id: "1", name: "Appliances", icon: "/assets/products/product1.jpg" },
@@ -19,16 +18,8 @@ const HotCategories = () => {
     <div className="">
       {/* Categories Section */}
       <div className="">
-        <div className="flex justify-between items-center mb-8">
-          <h2 className="text-xl font-semibold text-gray-800 dark:text-slate-100">
-            Hot categories
-          </h2>
-          <Link
-            href="/categories"
-            className="text-base text-gray-500 dark:text-slate-100 hover:text-green-600 flex items-center"
-          >
-            Shop More <ChevronRight className="h-5 w-5 ml-2" />
-          </Link>
+        <div>
+          <SectionTitle title="Hot Categories" href="/categories" />
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2">

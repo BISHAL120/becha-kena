@@ -65,7 +65,7 @@ export async function DesktopNavigation({
 
   return (
     <NavigationMenu
-      className={`${className} hidden md:block max-w-[1650px] mx-auto py-3`}
+      className={`${className} hidden md:block max-w-[1650px] mx-auto py-1`}
     >
       <NavigationMenuList className="justify-start">
         <NavigationMenuItem className=" ">
